@@ -28,17 +28,17 @@ RAND # #                          -  Generates a random number between value one
 
 Characters of Note:
 
-@                                 -  Absolute location for a cell.
+"@"                                 -  Absolute location for a cell.
 
 "+"                                 -  Cell ahead of the cell the rule has been called upon.
 
 "-"                                 -  Cell behind the cell the rule has been called upon.
 
-%                                 -  Indicates a constant. ONLY THIS CAN BE USED PRE-START (excepting IF statements). e.x. SIZE %6 SET %0 %8 %g %0 %0 %5
+"%"                                 -  Indicates a constant. ONLY THIS CAN BE USED PRE-START (excepting IF statements). e.x. SIZE %6 SET %0 %8 %g %0 %0 %5
 
-&                                 -  Means all cells.
+"&"                                 -  Means all cells.
 
-!                                 -  Starts and ends comments.
+"!"                                 -  Starts and ends comments.
 
 whitespace                        -  Ignored entirely. RULE%6IF@k=%0IF+1=%j%6%1 is valid, but not recomended.
 
