@@ -4,8 +4,8 @@ TWCBL is a free, open source programming language built around creating 1-d cell
 Commands:
 SIZE #                            -  Sets the size of the one dimensional plane the cells reside in. All programs MUST start with SIZE.
 SET # # # # # #...                -  Gives each cell a starting value. Numbers must be a one-digit base 64 value.
-RULE # IF [...] IF [...]... # #   -  Creates a rule with a one-digit base 64 id. If all if staements contained evaluate to ture, set the cell the rule is being on to the second value, third if not.
-IF #=#                            -  If statement can compare cells with values or cells to constants. @ indicates an absolute location, + and - are relative locations, and % means a constant. e.x. @G is the 43rd cell, +4 is the cell four places ahead of the current cell, -c is the cell 12 places behind the current cell, and %8 is the number 8. Must be after a RULE statement
+RULE # IF [...] IF [...]... # #   -  Creates a rule with a one-digit base 64 id. If all if statements contained evaluate to ture, set the cell the rule is being on to the second value, third if not.
+IF #=#                            -  If statement can compare cells with values or cells to constants. Must be after a RULE statement
 START                             -  Ends initialization. All above commands can no longer be used.
 CALL # (# or &)                   -  Runs the rule selected by the first value, on the cell selected by the second. Use & to run the rule on ALL cells.
 RETURN #                          -  Specifies a return point for a loop, with a base 64 id. Allways preceds a loop statement.
