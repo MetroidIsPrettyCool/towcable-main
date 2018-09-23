@@ -10,7 +10,7 @@ VALS # # # # # #...                 -  Gives each cell a starting value. Numbers
 
 FUNC # IFEQ [...] IFEQ [...]... # # -  Creates a rule with a one-digit base 64 id. If all if statements contained evaluate to true, set the cell the rule is being called upon to the second value, third if not.
 
-IFEQ #=#                            -  If statement can compare cells with values or cells to constants. Must be after a RULE statement
+IFEQ # #                            -  If statement can compare cells with values or cells to constants. Must be after a RULE statement
 
 BEGN                                -  Ends initialization. All above commands can no longer be used.
 
@@ -34,17 +34,17 @@ Characters of Note:
 
 "-"                                 -  Cell behind the cell the rule has been called upon.
 
-"%"                                 -  Indicates a constant. ONLY THIS CAN BE USED PRE-BEGN (excepting IFEQ statements). e.x. SIZE %6 SET %0 %8 %g %0 %0 %5
+"%"                                 -  Indicates a constant. ONLY THIS CAN BE USED PRE-BEGN (excepting IFEQ statements). e.x. SIZE %6 VALS %0 %8 %g %0 %0 %5
 
 "&"                                 -  Means all cells, or means the loop is infinte.
 
 "!"                                 -  Starts and ends comments.
 
-whitespace                          -  Ignored entirely. RULE%6IF@k=%0IF+1=%j%6%1 is valid, but not recomended.
+whitespace                          -  Ignored entirely. e.x. RULE%6IF@k=%0IF+1=%j%6%1 is valid, but not recomended.
 
 More notes:
 
-All values are base 64. However, I use my own notation scheme for the base. Starting from 0 to 63: 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'"
+All values are base 64. However, I use my own notation scheme for the base. Starting from 0 to 63: 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-
 
 (Sorry if that's confusing)
 
