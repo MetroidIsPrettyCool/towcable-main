@@ -1,33 +1,24 @@
 #include <stdio.h>
 
-#define SIZE 1
-#define VARS 2
-#define FUNC 3
-#define IFEQ 4
-#define BEGN 5
-#define CALL 6
-#define DEST 7
-#define LOOP 8
-#define OUTP 9
-#define USER 10
-#define RAND 11
-
 int baseConvert (int number);
 
 int main (void)  {
   FILE *fp;
   fp = fopen("./twcbl.cbi", "r"); // need to add a way to chose what file to open from the command line or something.
-  int i = 0;
   int a = 0;
   int c = 0;
   int l = 1;
   int b = 0;
   int x = 0;
+  int errorTemp = 0; //Used for various error checkers
   int currCommand = 0;
   int complete = 0;
   int done = 0;
   int input = 0;
   int tokened [10000];
+  for (c = 0; c != 10000; c++)  {
+    tokened [c] = -1;
+  }
   int array [64];
   int temp = 0;
   char commandsInit [5] [4] = {
@@ -68,17 +59,23 @@ int main (void)  {
       complete++;
       if (complete == 4) {
 	tokened [a] = 100 + currCommand;
+	if (currCommand == 5)  {
+	  done = 1;
+	}
 	a++;
       }
+    }
+    else if (input == characters [6] && commandArgs [currCommand - 1] [2] == 1 && complete == 4)  { //If it finds a period
+      currCommand = 0;
+      complete = 0;
+      b = 0;
     }
     else if (input == whitespace [1])  { //Increment line count if a newline is found.
       l++;
       x = 0;
     }
     else if (input == -1)  {  //EOF finder
-      printf("ERROR: EOF\n");
-      for (c = 0; c != a; c++)
-	printf("%d\n", tokened [c]);
+      printf("ERROR: FILE TERMINATED EARLY\n");
       fclose(fp);
       return 0;
     }
@@ -124,30 +121,53 @@ int main (void)  {
     }
     else if (baseConvert(input) != -1 && complete == 5)  { //If the input is a value
       b++;
+      tokened [a] = baseConvert(input);
+      a++;
+      if (currCommand == 2)  {
+	errorTemp++;
+      }
       if (b == commandArgs [currCommand - 1] [0] && commandArgs [currCommand - 1] [2] != 1)  {
 	currCommand = 0;
 	complete = 0;
 	b = 0;
       }
       else {
-	complete = 5;
-	tokened [a] = baseConvert(input);
-	a++;
+	complete = 4;
       }
-    }
-    else if (input == characters [6] && commandArgs [currCommand - 1] [2] == 1 && complete == 5)  { //If it finds a period
-      currCommand = 0;
-      complete = 0;
-      b = 0;
     }
     else if (input != whitespace [0] && input != whitespace [2]) {  //Catch-all error
       printf("ERROR: ILLEGAL CHARACTER IN FILE AT LINE %d, CHARACTER %d : %c\n", l, x, input);
       fclose(fp);
       return 0;
     }
-    i++;
+    //Error Checks
+    if (tokened [2] == 0)  { //Checks to see if the array size is 0
+      printf("ERROR: PLANE HAS DIMENSION 0\n");
+      fclose(fp);
+      return 0;
+    }
+    if (tokened [0] != 101 && tokened [0] != -1)  { //Checks to see if the first command is SIZE
+      printf("ERROR: COMMAND 1 IS NOT \"SIZE\"\n");
+      fclose(fp);
+      return 0;
+    }
+    if (tokened [3] != 102 && tokened [3] != -1)  { //Checks to see if the second command is VALS
+      printf("ERROR: COMMAND 2 IS NOT \"VALS\"\n");
+      fclose(fp);
+      return 0;
+    }
     x++;
   }
+  done = 0;
+  if (errorTemp != tokened [2])  { //Checks to see if VALS has the correct number of arguments
+    printf("ERROR: VALS HAS AN INCORRECT NUMBER OF ARGUMENTS\n");
+    fclose(fp);
+    return 0;
+  }
+  errorTemp = 0;
+  /* for (c = 0; c != a; c++)  { //Prints out all Tokens */
+  /*   printf("%d\n", tokened [c]); */
+  /* } */
 }
 
 int baseConvert (int number)  {
