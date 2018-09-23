@@ -36,7 +36,7 @@ Characters of Note:
 
 "%"                               -  Indicates a constant. ONLY THIS CAN BE USED PRE-BEGIN (excepting IF statements). e.x. SIZE %6 SET %0 %8 %g %0 %0 %5
 
-"&"                               -  Means all cells.
+"&"                               -  Means all cells, or means the loop is infinte.
 
 "!"                               -  Starts and ends comments.
 
