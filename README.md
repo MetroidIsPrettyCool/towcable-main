@@ -8,7 +8,7 @@ SIZE #                              -  Sets the size of the one dimensional plan
 
 VALS # # # # # #...                 -  Gives each cell a starting value. Numbers must be a one-digit base 64 value.
 
-FUNC # IFEQ [...] IFEQ [...]... # # -  Creates a rule with a one-digit base 64 id. If all if statements contained evaluate to true, set the cell the rule is being called upon to the second value, third if not.
+FUNC # # # IFEQ [...] IFEQ [...]... -  Creates a rule with a one-digit base 64 id. If all if statements contained evaluate to true, set the cell the rule is being called upon to the second value, third if not.
 
 IFEQ # #                            -  If statement can compare cells with values or cells to constants. Must be after a RULE statement
 
@@ -39,6 +39,8 @@ Characters of Note:
 "&"                                 -  Means all cells, or means the loop is infinte.
 
 "!"                                 -  Starts and ends comments.
+
+"."                                 -  Ends a sequnce of infinite arguments. (Including IFEQS)
 
 whitespace                          -  Ignored entirely. e.x. RULE%6IF@k=%0IF+1=%j%6%1 is valid, but not recomended.
 
