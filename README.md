@@ -6,13 +6,13 @@ Commands:
 
 SIZE #                            -  Sets the size of the one dimensional plane the cells reside in. All programs MUST start with SIZE.
 
-VALUES # # # # # #...             -  Gives each cell a starting value. Numbers must be a one-digit base 64 value.
+VALS # # # # # #...               -  Gives each cell a starting value. Numbers must be a one-digit base 64 value.
 
 FUNC # IF [...] IF [...]... # #   -  Creates a rule with a one-digit base 64 id. If all if statements contained evaluate to true, set the cell the rule is being called upon to the second value, third if not.
 
 IF #=#                            -  If statement can compare cells with values or cells to constants. Must be after a RULE statement
 
-BEGIN                             -  Ends initialization. All above commands can no longer be used.
+BEGN                              -  Ends initialization. All above commands can no longer be used.
 
 CALL # (# or &)                   -  Runs the function selected by the first value, on the cell selected by the second. Use & to run the rule on ALL cells.
 
