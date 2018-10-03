@@ -15,8 +15,8 @@ int main (void)  {
   srand(time(0)); // Seed the random Number Generator with the current itme
   
   // Variables
-  int tokens [] = {-10, 302, 301, 200, 100, 200, 101, 200, 102}; // Tokenized arguments. Eventually should be modifeid to fit variable sizes of tokens.
-  int tokenAmount = 8; // Amount of tokens in the token array.
+  int tokens [] = {-10, 200, 201, 301, 303, 106, 200, 135, 302, 305, 106, 201, 104, 200, 103}; // Tokenized arguments. Eventually should be modifeid to fit variable sizes of tokens.
+  int tokenAmount = 14; // Amount of tokens in the token array.
   int cell [] = {1, 7, 8, 9, 10, 31, 6, 21, 43, 51, 7, 13}; // Placeholder for the real array of cells
   int cellSize = 12; // Amount of cells in the array.
   int currCell = 3; // Cell being operated upon.
@@ -172,7 +172,7 @@ printf("VA%i\n", valA);
 	for (i = tokenAmount; (tokens [i] > 306 || tokens [i] < 300) && tokens [i] != -10; i--); // Finds the last MultiOp
       }
       if (currMultiOp == 305)  { // If the MultiOp is MODN
-	tokens [currLoc] =valA % valB;
+	tokens [currLoc] = valA % valB;
 	tokens [currLoc] += 100;
 	for (i = tokenAmount; (tokens [i] > 306 || tokens [i] < 300) && tokens [i] != -10; i--); // Finds the last MultiOp
       }
