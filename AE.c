@@ -29,6 +29,50 @@ int main (void)  {
   int valB; // Store the values the MultiOp is acting on.
   int exitNow = 0; // If this is one, stop parsing the input
 
+  // The code below simply prints the tokens and cells in a readable format. It will be deleted later
+  for (i = 1;  i != tokenAmount; i++)  { // Tokens
+    if (tokens [i] >= 100 && tokens [i] < 110)  { // Numbers
+        printf("%i ", tokens [i] - 100);
+    }
+    if (tokens [i] > 109 && tokens [i] < 136)  { // Lowercase
+        printf("%c ", tokens [i] - 4);
+    }
+    if (tokens [i] > 135 && tokens [i] < 161)  { // Uppercase
+        printf("%i ", tokens [i] - 70);
+    }
+    if (tokens [i] == 200)  {
+        printf("@ ");
+    }
+    if (tokens [i] == 201)  {
+        printf("+ ");
+    }
+    if (tokens [i] == 202)  {
+        printf("- ");
+    }
+    if (tokens [i] == 300)  {
+        printf("RAND ");
+    }
+    if (tokens [i] == 301)  {
+        printf("ADDN ");
+    }
+    if (tokens [i] == 302)  {
+        printf("SUBN ");
+    }
+    if (tokens [i] == 303)  {
+        printf("MULN ");
+    }
+    if (tokens [i] == 304)  {
+        printf("DIVN ");
+    }
+    if (tokens [i] == 305)  {
+        printf("MODN ");
+    }
+    if (tokens [i] == 306)  {
+        printf("PAST ");
+    }
+  }
+  printf("\n");
+
   for (i = tokenAmount; (tokens [i] > 306 || tokens [i] < 300) && tokens [i] != -10; i--); // Finds the last MultiOp
   while (exitNow != 1)  {
     currMultiOp = tokens [i]; // Sets the current MultiOp to the right token value
