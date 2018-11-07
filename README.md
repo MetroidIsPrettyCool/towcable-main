@@ -48,3 +48,9 @@ Comparatives
   IFGE x x
   IFLT x x
   IFLE x x
+
+Possible Additions
+  
+  RANG x x
+  2D version
+  multi-digit number support
