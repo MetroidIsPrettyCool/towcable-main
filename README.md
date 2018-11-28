@@ -5,52 +5,50 @@ READ_ME_TODO: add descriptions to commands
 Commands
 
   Setup
-    SIZE x
-    SETP ...
-    RULE x x x iii
-    CMPX x ...
-    BEGN
+    DIMN 500
+    SIZE 501
+    SETP 502
+    RULE 503
+    CMPX 504
+    BEGN 505
 
   Runtime
-    OUPT ... or &
-    INPT x
-    CALL x ... or &
-    CALX x ... or &
-    LOOP x x or &
-    LOTO x 
-    COND iii
-    ENDC
-    
-    
+    OUPT 600
+    CRPT 601
+    INPT 602
+    CALL 603
+    CALX 604
+    LOOP 605
+    LOTO 606
+    COND 607
+    ENDC 608
+    STRO 609
 
 Numerical Operators
   
-  RAND x x
-  ADDN x x
-  SUBN x x
-  MULN x x
-  DIVN x x
-  MODN x x
-  PAST x x
+  RAND 300
+  ADDN 301
+  SUBN 302
+  MULN 303
+  DIVN 304
+  MODN 305
+  PAST 306
 
 Location Operators
 
-  @ x
-  + x
-  - x
-  % x
+  @,+,- 200, 201, 202
 
 Comparatives
 
-  IFEQ x x
-  IFNQ x x
-  IFGT x x
-  IFGE x x
-  IFLT x x
-  IFLE x x
+  EQ 400
+  NQ 401
+  GT 402
+  GE 403
+  LT 404
+  LE 405
 
-Possible Additions
+Other:
   
-  RANG x x
-  2D version
-  multi-digit number support
+  i 101
+  & 100
+  r 1738
