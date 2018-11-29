@@ -55,9 +55,6 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
     printf("This is a dead meme\n");
     return 609;
   }
-  if (tokenAmount == 1 && *(tokens + 1) >= 400 && *(tokens + 1) <= 405)  {
-    return (*(tokens + 1) - 389) * -1;
-  }
   for (;;)  {
     for (i = tokenAmount; *(tokens + i) <= 0; i--);
     currMultiOp = *(tokens + i);
@@ -151,12 +148,61 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	i3 += *(valS + dimensions) * i4 * pastAmount;
 	*(tokens + currLoc) = (*(pastCell + i3) + 1) * -1;
       }
+      if (currMultiOp == 400)  {
+	if (*valS == *(valS + 1))  {
+	  *(tokens + currLoc) = -2;
+	}
+	else {
+	  *(tokens + currLoc) = -1;
+	}
+      }
+      if (currMultiOp == 401)  {
+	if (*valS != *(valS + 1))  {
+	  *(tokens + currLoc) = -2;
+	}
+	else {
+	  *(tokens + currLoc) = -1;
+	}
+      }
+      if (currMultiOp == 402)  {
+	if (*valS > *(valS + 1))  {
+	  *(tokens + currLoc) = -2;
+	}
+	else {
+	  *(tokens + currLoc) = -1;
+	}
+      }
+      if (currMultiOp == 403)  {
+	if (*valS >= *(valS + 1))  {
+	  *(tokens + currLoc) = -2;
+	}
+	else {
+	  *(tokens + currLoc) = -1;
+	}
+      }
+      if (currMultiOp == 404)  {
+	if (*valS < *(valS + 1))  {
+	  *(tokens + currLoc) = -2;
+	}
+	else {
+	  *(tokens + currLoc) = -1;
+	}
+      }
+      if (currMultiOp == 405)  {
+	if (*valS <= *(valS + 1))  {
+	  *(tokens + currLoc) = -2;
+	}
+	else {
+	  *(tokens + currLoc) = -1;
+	}
+      }
     }
     else {
       return (*(tokens + 1) * -1) -1;
     }
   }
 }
+
 
 int main (void)  {
   srand(time(0)); // Seed the Random Number Generator with the current time
