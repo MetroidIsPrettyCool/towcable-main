@@ -23,6 +23,7 @@ Commands
     COND 607
     ENDC 608
     STRO 609
+    EXIT 610
 
 Numerical Operators
   
