@@ -50,6 +50,6 @@ Comparatives
 
 Other:
   
-  i 101
+  i
   & 100
   r 1738
