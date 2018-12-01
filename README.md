@@ -34,6 +34,7 @@ Numerical Operators
   DIVN 304
   MODN 305
   PAST 306
+  LOCN 307
 
 Location Operators
 
@@ -70,6 +71,15 @@ Examples:
 124345i
 902390i
 
+Location Modifiers:
+
+LOCMOD
+
+Examples:
+@92i
++5i
+-8i
+
 Flat MultiOps
 
 MultiOp ARG ARG
@@ -79,14 +89,15 @@ ADDN 8i 7i
 MULN @ 3i 7i 78i
 DIVN RAND 6i 8i 2i
 
-Scaling MultiOps
+LOCN
 
-MultiOp ARG ARG ARG (Agument number is equal to the number of dimensions the program is running in)
+LOCN LCMOD ARG LCMOD ARG (number of LCMOD's and ARGs is equal to dimensions LCMODs MUST be followed by an ARG)
 
 Examples:
-@ 8i
-+ 9i 8i 7i
-- 8i 9i 10i 100i @ 8i 9i 7i 10i 89i
+
+LOCN +8i -0i
+LOCN @5i
+LOCN @ ADDN 5i 9i +3i
 
 PAST
 
