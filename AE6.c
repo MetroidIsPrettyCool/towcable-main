@@ -59,18 +59,13 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
     return 609;
   }
   for (;;)  {
-    for (i = tokenAmount; *(tokens + i) <= 300 && *(tokens + i) != 10; i--) {
-      printf("t\n");
-      fflush(NULL);
+    for (i = tokenAmount; *(tokens + i) < 300 && *(tokens + i) != 10; i--) {
     }
     currMultiOp = *(tokens + i);
-    printf("qwqw%i  %i\n", currMultiOp, *(tokens + i));
-    fflush(NULL);
     currLoc = i;
     if (currMultiOp != 10)  {
       for (i2 = 0; i2 != ((currMultiOp == 306) ? dimensions + 1 : ((currMultiOp == 307) ? (2 * dimensions) : 2)); i2++)  {
 	for (i = currLoc; *(tokens + i) >= 300 || *(tokens + i) == 0; i++);
-	printf("%i 12rewqasd;'\n", *(tokens + i));
         if (*(tokens + i) < 0)  {
 	  *(valS + i2) = (*(tokens + i) * -1) - 1;
 	}
@@ -79,8 +74,6 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	}
 	*(tokens + i) = 0;
       }
-      printf("qwqw%i\n", currMultiOp);
-      fflush(NULL);
       if (currMultiOp == 300)  {
  	*(tokens + currLoc) = (((rand() % (*(valS + 1))) + *valS) + 1) * -1;
       }
@@ -89,8 +82,8 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
       }
       if (currMultiOp == 302)  {
  	*(tokens + currLoc) = ((*valS - *(valS + 1)) + 1) * -1;
- 	if (*(tokens + currLoc) < 0)  {
- 	  *(tokens + currLoc) = -1;
+ 	if (*(tokens + currLoc) > 0)  {
+ 	  *(tokens + currLoc) = 0;
  	}
       }
       if (currMultiOp == 303)  {
@@ -116,54 +109,38 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
       }
       if (currMultiOp == 307)  { // LOCN
 	i3 = 0;
-	printf("g\n");
-	fflush(NULL);
-	printf("%i %i gg234234\n", *valS, *(valS + 1));
 	for (i2 = 0; i2 != dimensions; i2++)  {
 	  if (*(valS + (2 * i2)) == 200) {
-	    printf("wqwhiojk\n");
 	    while (*(valS + (2 * i2) + 1) > *(cellSizes + i2))  {
-	      printf("r\n");
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
 	    for (i5 = 0; i5 < i2; i5++)  {
 	      i4 *= *(cellSizes + i5);
 	    }
-	    printf("%i rtqw\n", i4);
 	    i3 += *(valS + (2 * i2 + 1)) * i4;
-	    printf("%i 8901243\n", i3);
 	  }
 	  if (*(valS + (2 * i2)) == 201) {
-	    printf("wqwhiojk\n");
 	    while (*(cellPointerCoors + i2) + *(valS + (2 * i2) + 1) > *(cellSizes + i2))  {
-	      printf("r\n");
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
 	    for (i5 = 0; i5 < i2; i5++)  {
 	      i4 *= *(cellSizes + i5);
 	    }
-	    printf("%i rtqw\n", i4);
 	    i3 += (*(cellPointerCoors + i2) + *(valS + (2 * i2 + 1))) * i4;
-	    printf("%i 8901243\n", i3);
 	  }
 	  if (*(valS + (2 * i2)) == 202) {
-	    printf("wqwhiojk\n");
 	    while (*(cellPointerCoors + i2) - *(valS + (2 * i2) + 1) > *(cellSizes + i2))  {
-	      printf("r\n");
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
 	    for (i5 = 0; i5 < i2; i5++)  {
 	      i4 *= *(cellSizes + i5);
 	    }
-	    printf("%i rtqw\n", i4);
 	    i3 += (*(cellPointerCoors + i2) - *(valS + (2 * i2 + 1))) * i4;
-	    printf("%i 8901243\n", i3);
 	  }
 	}
-	printf("yart %i\n", *(cell + i3));
 	*(tokens + currLoc) = (*(cell + i3) + 1) * -1;
       }
       if (currMultiOp == 400)  {
