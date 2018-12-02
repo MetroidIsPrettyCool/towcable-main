@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -59,18 +60,13 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
     return 609;
   }
   for (;;)  {
-    for (i = tokenAmount; *(tokens + i) <= 300 && *(tokens + i) != 10; i--) {
-      printf("t\n");
-      fflush(NULL);
+    for (i = tokenAmount; *(tokens + i) < 300 && *(tokens + i) != 10; i--) {
     }
     currMultiOp = *(tokens + i);
-    printf("qwqw%i  %i\n", currMultiOp, *(tokens + i));
-    fflush(NULL);
     currLoc = i;
     if (currMultiOp != 10)  {
       for (i2 = 0; i2 != ((currMultiOp == 306) ? dimensions + 1 : ((currMultiOp == 307) ? (2 * dimensions) : 2)); i2++)  {
 	for (i = currLoc; *(tokens + i) >= 300 || *(tokens + i) == 0; i++);
-	printf("%i 12rewqasd;'\n", *(tokens + i));
         if (*(tokens + i) < 0)  {
 	  *(valS + i2) = (*(tokens + i) * -1) - 1;
 	}
@@ -79,8 +75,6 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	}
 	*(tokens + i) = 0;
       }
-      printf("qwqw%i\n", currMultiOp);
-      fflush(NULL);
       if (currMultiOp == 300)  {
  	*(tokens + currLoc) = (((rand() % (*(valS + 1))) + *valS) + 1) * -1;
       }
@@ -89,8 +83,8 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
       }
       if (currMultiOp == 302)  {
  	*(tokens + currLoc) = ((*valS - *(valS + 1)) + 1) * -1;
- 	if (*(tokens + currLoc) < 0)  {
- 	  *(tokens + currLoc) = -1;
+ 	if (*(tokens + currLoc) > 0)  {
+ 	  *(tokens + currLoc) = 0;
  	}
       }
       if (currMultiOp == 303)  {
@@ -116,54 +110,38 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
       }
       if (currMultiOp == 307)  { // LOCN
 	i3 = 0;
-	printf("g\n");
-	fflush(NULL);
-	printf("%i %i gg234234\n", *valS, *(valS + 1));
 	for (i2 = 0; i2 != dimensions; i2++)  {
 	  if (*(valS + (2 * i2)) == 200) {
-	    printf("wqwhiojk\n");
 	    while (*(valS + (2 * i2) + 1) > *(cellSizes + i2))  {
-	      printf("r\n");
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
 	    for (i5 = 0; i5 < i2; i5++)  {
 	      i4 *= *(cellSizes + i5);
 	    }
-	    printf("%i rtqw\n", i4);
 	    i3 += *(valS + (2 * i2 + 1)) * i4;
-	    printf("%i 8901243\n", i3);
 	  }
 	  if (*(valS + (2 * i2)) == 201) {
-	    printf("wqwhiojk\n");
 	    while (*(cellPointerCoors + i2) + *(valS + (2 * i2) + 1) > *(cellSizes + i2))  {
-	      printf("r\n");
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
 	    for (i5 = 0; i5 < i2; i5++)  {
 	      i4 *= *(cellSizes + i5);
 	    }
-	    printf("%i rtqw\n", i4);
 	    i3 += (*(cellPointerCoors + i2) + *(valS + (2 * i2 + 1))) * i4;
-	    printf("%i 8901243\n", i3);
 	  }
 	  if (*(valS + (2 * i2)) == 202) {
-	    printf("wqwhiojk\n");
 	    while (*(cellPointerCoors + i2) - *(valS + (2 * i2) + 1) > *(cellSizes + i2))  {
-	      printf("r\n");
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
 	    for (i5 = 0; i5 < i2; i5++)  {
 	      i4 *= *(cellSizes + i5);
 	    }
-	    printf("%i rtqw\n", i4);
 	    i3 += (*(cellPointerCoors + i2) - *(valS + (2 * i2 + 1))) * i4;
-	    printf("%i 8901243\n", i3);
 	  }
 	}
-	printf("yart %i\n", *(cell + i3));
 	*(tokens + currLoc) = (*(cell + i3) + 1) * -1;
       }
       if (currMultiOp == 400)  {
@@ -233,6 +211,7 @@ int main (void)  {
 
   int D = 1; // Dimensions (infinite)
 
+  printf("(TNSI 0.3) ?: ");
   scanf("%d", &currComm); // Get the command we're running
 
   if (currComm != 500)  { // If the command isn't DIMN
@@ -240,6 +219,7 @@ int main (void)  {
     return -1;
   }
   
+  printf("(TNSI 0.3) ?: ");
   scanf("%d", &D); // Read an argument
 
   if (D > -1)  {
@@ -248,7 +228,8 @@ int main (void)  {
   }
 
   D = ((D) * -1) - 1; // Set D to a non-token value
-
+  
+  printf("(TNSI 0.3) ?: ");
   scanf("%d", &currComm); // Get the command we're running
 
   if (currComm != 501)  { // If the command isn't SIZE
@@ -258,6 +239,7 @@ int main (void)  {
   
   int *cellSizes = malloc(sizeof(int) * D); // The number of numbers used to describe the length / area / volume etc.
   for (i = 0; i != D; i++)  {
+    printf("(TNSI 0.3) ?: ");
     scanf("%d", &input);
     if (input > -1)  {
       printf("ERROR 003: CELL DIMENSION LESS THAN 1");
@@ -274,11 +256,12 @@ int main (void)  {
 
   int *cell = calloc(i2, sizeof(int)); // Pointer to the cells
 
-  
+  printf("(TNSI 0.3) ?: ");
   scanf("%d", &currComm); // Get the command we're running
   
   if (currComm == 502)  {
     for (i = 0; i != i2; i++)  {
+      printf("(TNSI 0.3) ?: ");
       scanf("%d", (cell + i));
       *(cell + i) = (*(cell + i) * -1) - 1;
       if (*(cell + i) < 0)  {
@@ -286,6 +269,7 @@ int main (void)  {
 	return -1;
       }
     }
+    printf("(TNSI 0.3) ?: ");
     scanf("%d", &currComm);
   }
   input = currComm;
@@ -295,6 +279,7 @@ int main (void)  {
   for (i = 0; i != D; i++)  {
     *(cellPointerCoors + i) = input * -1 - 1;
     if (i != D - 1)  {
+      printf("(TNSI 0.3) ?: ");
       scanf("%d", &input);
       if (input > -1)  {
 	printf("ERROR TSNI0: CELL POINTER COORDINATE LESS THAN 1\n");
@@ -313,10 +298,25 @@ int main (void)  {
 
   int *tokens = malloc(sizeof(int)); // Pointer to the list of tokens
   int tokenAmount; // Stores the number of tokens in the list
-  for (tokenAmount = 0; input != 101; tokenAmount++)  { // Loop to fill tokens
+  int tracker;
+  int executed;
+  tracker = 0;
+  executed = 0;
+  for (tokenAmount = 0; tracker != 0 || executed == 0; tokenAmount++)  { // Loop to fill tokens
+    executed = 1;
     *(tokens + tokenAmount) = input; // Put the input into tokens
     tokens = realloc(tokens, (sizeof(int) * tokenAmount + 1)); // Increase the size of tokens to fit the amount of tokens
-    scanf("%d", &input); // Read input
+    if (input < 0 || input == 100 || (input >= 200 && input < 203))  {
+      tracker--;
+    }
+    else {
+      tracker += ((input == 306) ? D + 1 : ((input == 307) ? (2 * D) : 2)) - 1;
+    }
+    if (tracker != 0)  {
+      printf("(TNSI 0.3) ?: ");
+      scanf("%d", &input); // Read input
+    }
   }
+  tokenAmount--;
   printf("Result: %i\n", AEND(tokens, tokenAmount, cell, cellSizes, D, cellPointerCoors, pastCell));
 }
