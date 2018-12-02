@@ -59,8 +59,7 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
     return 609;
   }
   for (;;)  {
-    for (i = tokenAmount; *(tokens + i) < 300 && *(tokens + i) != 10; i--) {
-    }
+    for (i = tokenAmount; *(tokens + i) < 300 && *(tokens + i) != 10; i--);
     currMultiOp = *(tokens + i);
     currLoc = i;
     if (currMultiOp != 10)  {
