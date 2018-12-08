@@ -1,4 +1,4 @@
-₮ Syntax (right now this is mostly for me, and if it's not readable to others, let me know.)
+TOWCBL Syntax (right now this is mostly for me, and if it's not readable to others, let me know.)
 
 READ_ME_TODO: add descriptions to commands
 
