@@ -372,6 +372,7 @@ int main (void)  {
     argAmount -= 2;
     if (currCommand == 600)  { // OUPT
       if (argAmount == 0 && *arguments == -1)  { // INFINITE
+	i = 0;
 	for (i3 = 1; i != D; i++)  {
 	  i3 *= *(cellSizes + i);
 	}
@@ -388,6 +389,7 @@ int main (void)  {
     }
     if (currCommand == 601)  { // CRPT
       if (argAmount == 0 && *arguments == -1)  { // INFINITE
+	i = 0;
 	for (i3 = 1; i != D; i++)  {
 	  i3 *= *(cellSizes + i);
 	}
