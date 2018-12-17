@@ -202,120 +202,29 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 int main (void)  {
   srand(time(0)); // Seed the Random Number Generator with the current time
 
-  int currComm; // Current Command
   int i; // General Purpose Counter
   int i2; // General Purpose Counter
   int i3; // General Purpose Counter
+
+  int step = 0;
 
   int input = 10; // General purpose input variable, used only in TSXX interperters
 
   int D = 1; // Dimensions (infinite)
 
-  printf(">>> ");
-  scanf("%d", &currComm); // Get the command we're running
-
-  if (currComm != 500)  { // If the command isn't DIMN
-    printf("ERROR 000: PROGRAM DOES NOT BEGIN WITH \"DIMN\"\n");
-    return -1;
-  }
+  int it;
   
-  printf(">>> ");
-  scanf("%d", &D); // Read an argument
-
-  if (D > -1)  {
-    printf("ERROR 001: DIMENSIONS LESS THAN 1\n");
-    return -1;
-  }
-
-  printf(">>> ");
-  scanf("%d", &input); // Get the next token
-
-  if (input != 101)  { // If the command isn't followed by a period.
-    printf("ERROR 006: LINE NOT TERMINATED BY PERIOD\n");
-    return -1;
-  }
-
-  D = ((D) * -1) - 1; // Set D to a non-token value
+  int *cellSizes = calloc(D, sizeof(int)); // The number of numbers used to describe the length / area / volume etc.
   
-  printf(">>> ");
-  scanf("%d", &currComm); // Get the command we're running
-
-  if (currComm != 501)  { // If the command isn't SIZE
-    printf("ERROR 002: \"SIZE\" DOES NOT FOLLOW \"DIMN\"\n");
-    return -1;
-  }
-  
-  int *cellSizes = malloc(sizeof(int) * D); // The number of numbers used to describe the length / area / volume etc.
-  for (i = 0; i != D; i++)  {
-    printf(">>> ");
-    scanf("%d", &input);
-    if (input > -1)  {
-      printf("ERROR 003: CELL DIMENSION LESS THAN 1");
-      return -1;
-    }
-    *(cellSizes + i) = input * -1 - 1;
-  }
-
-  printf(">>> ");
-  scanf("%d", &input); // Get the next token
-
-  if (input != 101)  { // If the command isn't followed by a period.
-    printf("ERROR 006: LINE NOT TERMINATED BY PERIOD\n");
-    return -1;
-  }
-  
-  i2 = 1;
+  it = 1;
   
   for (i = 0; i != D; i++)  { // Figure out how big the cell array needs to be
-    i2 *= *(cellSizes + i);
+    it *= *(cellSizes + i);
   }
 
   int *cell = calloc(i2, sizeof(int)); // Pointer to the cells
 
-  printf(">>> ");
-  scanf("%d", &currComm); // Get the command we're running
-  
-  if (currComm == 502)  {
-    for (i = 0; i != i2; i++)  {
-      printf(">>> ");
-      scanf("%d", (cell + i));
-      *(cell + i) = (*(cell + i) * -1) - 1;
-      if (*(cell + i) < 0)  {
-	printf("ERROR 004: CELL VALUE LESS THAN 0\n");
-	return -1;
-      }
-    }
-
-    printf(">>> ");
-    scanf("%d", &input); // Get the next token
-
-    if (input != 101)  { // If the command isn't followed by a period.
-      printf("ERROR 006: LINE NOT TERMINATED BY PERIOD\n");
-      return -1;
-    }
-    
-    printf(">>> ");
-    scanf("%d", &currComm);
-  }
-  input = currComm;
-
-  int *cellPointerCoors = malloc(sizeof(int) * D); // Stores the cell pointer coordinates
-  
-  for (i = 0; i != D; i++)  {
-    *(cellPointerCoors + i) = input * -1 - 1;
-    if (i != D - 1)  {
-      printf(">>> ");
-      scanf("%d", &input);
-      if (input > -1)  {
-	printf("ERROR TSNI0: CELL POINTER COORDINATE LESS THAN 1\n");
-	return -1;
-      }
-      if (input > *(cellSizes + i))  {
-	printf("ERROR TSNI1: CELL POINTER COORDINATE GREATER THAN DIMENSION\n");
-	return -1;
-      }
-    }
-  }
+  int *cellPointerCoors = calloc(D, sizeof(int)); // Stores the cell pointer coordinates
 
   int *pastCell = calloc(i2 * pastAmount, sizeof(int));
 
@@ -337,8 +246,9 @@ int main (void)  {
 
   int inStrPtr;
 
+  int init = 1; // Are we in initialization mode?
+
   int c;
-  while ((c = getchar()) != '\n' && c != EOF);
 
   for (;;)  {
     argStop = 0;
@@ -346,42 +256,68 @@ int main (void)  {
     inStrPtr = 4;
     printf("S>>> ");
     fgets(inptStr, 1000000, stdin);
-    if (*(inptStr) == 'O' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
-      currCommand = 600;
-    }
-    else if (*(inptStr) == 'C' && *(inptStr + 1) == 'R' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
-      currCommand = 601;
-    }
-    else if (*(inptStr) == 'I' && *(inptStr + 1) == 'N' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
-      currCommand = 602;
-    }
-    else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
-      currCommand = 603;
-    }
-    else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
-      currCommand = 604;
-    }
-    else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
-      currCommand = 605;
-    }
-    else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
-      currCommand = 606;
-    }
-    else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
-      currCommand = 607;
-    }
-    else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
-      currCommand = 608;
-    }
-    else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
-      currCommand = 609;
-    }
-    else if (*(inptStr) == 'E' && *(inptStr + 1) == 'X' && *(inptStr + 2) == 'I' && *(inptStr + 3) == 'T')  {
-      currCommand = 610;
+    if (init == 1)  {
+      if (*(inptStr) == 'D' && *(inptStr + 1) == 'I' && *(inptStr + 2) == 'M' && *(inptStr + 3) == 'N')  {
+	currCommand = 500;
+      }
+      else if (*(inptStr) == 'S' && *(inptStr + 1) == 'I' && *(inptStr + 2) == 'Z' && *(inptStr + 3) == 'E')  {
+	currCommand = 501;
+      }
+      else if (*(inptStr) == 'S' && *(inptStr + 1) == 'E' && *(inptStr + 2) == 'T' && *(inptStr + 3) == 'P')  {
+	currCommand = 502;
+      }
+      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 503;
+      }
+      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 504;
+      }
+      else if (*(inptStr) == 'B' && *(inptStr + 1) == 'E' && *(inptStr + 2) == 'G' && *(inptStr + 3) == 'N')  {
+	currCommand = 505;
+      }
+      else  {
+	printf("ERR: ILLEGAL COMMAND \"%c%c%c%c\"\n", *(inptStr), *(inptStr + 1), *(inptStr + 2), *(inptStr + 3));
+	return -1;
+      }
     }
     else  {
-      printf("ERR: ILLEGAL COMMAND \"%c%c%c%c\"\n", *(inptStr), *(inptStr + 1), *(inptStr + 2), *(inptStr + 3));
-      return -1;
+      if (*(inptStr) == 'O' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 600;
+      }
+      else if (*(inptStr) == 'C' && *(inptStr + 1) == 'R' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 601;
+      }
+      else if (*(inptStr) == 'I' && *(inptStr + 1) == 'N' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 602;
+      }
+      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 603;
+      }
+      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 604;
+      }
+      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 605;
+      }
+      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 606;
+      }
+      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 607;
+      }
+      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 608;
+      }
+      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+	currCommand = 609;
+      }
+      else if (*(inptStr) == 'E' && *(inptStr + 1) == 'X' && *(inptStr + 2) == 'I' && *(inptStr + 3) == 'T')  {
+	currCommand = 610;
+      }
+      else  {
+	printf("ERR: ILLEGAL COMMAND \"%c%c%c%c\"\n", *(inptStr), *(inptStr + 1), *(inptStr + 2), *(inptStr + 3));
+	return -1;
+      }
     }
     for (argAmount = 0; argStop != 1; argAmount++)  {
       input = 10;
@@ -519,7 +455,47 @@ int main (void)  {
     }
     // Execute commands:
     argAmount -= 2;
-    if (currCommand == 600)  { // OUPT
+    if (init == 1)  {
+      if (currCommand == 500 && step == 0)  { // DIMN
+	if (*arguments <= 0)  {
+	  printf("ERROR 001: DIMENSIONS LESS THAN 1\n");
+	  return -1;
+	}
+	step = 1;
+	free(cellSizes);
+	cellSizes = calloc(D, sizeof(int));
+      }
+      if (currCommand == 501 && step == 1)  { // SIZE
+	for (i = 0; i != D; i++)  {
+	  input = *(i + arguments);
+	  if (input <= 0)  {
+	    printf("ERROR 003: CELL DIMENSION LESS THAN 1");
+	    return -1;
+	  }
+	  *(cellSizes + i) = input;
+	}
+	it = 1;
+  
+	for (i = 0; i != D; i++)  { // Figure out how big the cell array needs to be
+	  it *= *(cellSizes + i);
+	}
+	free(cell);
+	cell = calloc(i2, sizeof(int)); // Pointer to the cells
+	free(cellPointerCoors);
+	cellPointerCoors = calloc(D, sizeof(int)); // Stores the cell pointer coordinates
+	free(pastCell);
+	pastCell = calloc(i2 * pastAmount, sizeof(int));
+      }
+      if (currCommand == 502)  { // SETP
+	for (i = 0; i != it; i++)  {
+	  *(cell + i) = *(arguments + i);
+	}
+      }
+      if (currCommand == 505)  {
+	init = 0;
+      }
+    }
+    else if (currCommand == 600)  { // OUPT
       if (argAmount == 0 && *arguments == -1)  { // INFINITE
 	i = 0;
 	for (i3 = 1; i != D; i++)  {
@@ -536,7 +512,7 @@ int main (void)  {
       }
       printf("\n");
     }
-    if (currCommand == 601)  { // CRPT
+    else if (currCommand == 601)  { // CRPT
       if (argAmount == 0 && *arguments == -1)  { // INFINITE
 	i = 0;
 	for (i3 = 1; i != D; i++)  {
