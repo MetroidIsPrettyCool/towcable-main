@@ -517,6 +517,7 @@ int main (void)  {
 	  return -1;
 	}
 	step = 1;
+	D = *arguments;
 	free(cellSizes);
 	cellSizes = calloc(D, sizeof(int));
       }
