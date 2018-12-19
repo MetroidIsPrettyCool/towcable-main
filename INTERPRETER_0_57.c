@@ -535,16 +535,19 @@ int main (void)  {
 	for (i = 0; i != D; i++)  { // Figure out how big the cell array needs to be
 	  it *= *(cellSizes + i);
 	}
+	printf("%i\n", it);
 	free(cell);
-	cell = calloc(i2, sizeof(int)); // Pointer to the cells
+	cell = calloc(it, sizeof(int)); // Pointer to the cells
 	free(cellPointerCoors);
 	cellPointerCoors = calloc(D, sizeof(int)); // Stores the cell pointer coordinates
 	free(pastCell);
-	pastCell = calloc(i2 * pastAmount, sizeof(int));
+	pastCell = calloc(it * pastAmount, sizeof(int));
       }
       if (currCommand == 502)  { // SETP
 	for (i = 0; i != it; i++)  {
 	  *(cell + i) = *(arguments + i);
+	  printf("%i\n", i);
+	  fflush(NULL);
 	}
       }
       if (currCommand == 505)  {
@@ -559,6 +562,13 @@ int main (void)  {
 	}
 	for (i2 = 0; i2 != i3; i2++)  {
 	  printf("%d ", *(cell + i2));
+	  if (i2 != 0)  {
+	    for (i = 1; i != D; i++)  {
+	      if ((i2 + 1) % *(cellSizes + i) == 0)  {
+		printf("\n");
+	      }
+	    }
+	  }
 	}
       }
       else  {
@@ -566,7 +576,9 @@ int main (void)  {
 	  printf("%d ", *(cell + *(i2 + arguments)));
 	}
       }
-      printf("\n");
+      if (argAmount != 0 || *arguments != -1 || D == 1)  {
+	printf("\n");
+      }
     }
     else if (currCommand == 601)  { // CRPT
       if (argAmount == 0 && *arguments == -1)  { // INFINITE
@@ -576,14 +588,23 @@ int main (void)  {
 	}
 	for (i2 = 0; i2 != i3; i2++)  {
 	  printf("%c ", *(cell + i2));
+	  if (i2 != 0)  {
+	    for (i = 0; i != D; i++)  {
+	      if ((i2 + 1) % *(cellSizes + i) == 0)  {
+		printf("\n");
+	      }
+	    }
+	  }
 	}
       }
       else  {
-        for (i2 = 0; i2 != argAmount + 1; i2++)  {
+        for (i2 = 1; i2 != argAmount + 1; i2++)  {
 	  printf("%c ", *(cell + *(i2 + arguments)));
 	}
       }
-      printf("\n");
+      if (argAmount != 0 || *arguments != -1 || D == 1)  {
+	printf("\n");
+      }
     }
     else if (currCommand == 602)  { // INPT
       if (argAmount == 0)  { // Correct amount of arguments
