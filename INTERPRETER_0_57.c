@@ -232,11 +232,11 @@ int main (void)  {
   int tracker;
   int executed;
 
-  int *tokens;
+  int *tokens = malloc(sizeof(int));;
 
   int argAmount;
 
-  int *arguments;
+  int *arguments = malloc(sizeof(int));
 
   int argStop;
 
@@ -252,7 +252,8 @@ int main (void)  {
 
   for (;;)  {
     argStop = 0;
-    arguments = malloc(sizeof(int));
+    free(arguments);
+    arguments = malloc(sizeof(int) * 2);
     inStrPtr = 4;
     printf(">>> ");
     fgets(inptStr, 1000000, stdin);
@@ -367,12 +368,13 @@ int main (void)  {
       input = 10;
       tracker = 0;
       executed = 0;
-      tokens = malloc(sizeof(int)); // Pointer to the list of tokens
+      free(tokens);
+      tokens = malloc(sizeof(int) * 2); // Pointer to the list of tokens
       for (tokenAmount = 0; tracker != 0 || executed == 0; tokenAmount++)  { // Loop to fill tokens
 	executed = 1;
 	if (input != 7)  {
 	  *(tokens + tokenAmount) = input; // Put the input into tokens
-	  tokens = realloc(tokens, (sizeof(int) * tokenAmount + 1)); // Increase the size of tokens to fit the amount of tokens
+	  tokens = realloc(tokens, (sizeof(int) * (tokenAmount + 2))); // Increase the size of tokens to fit the amount of tokens
 	}
 	if ((input < 0 || input == 100 || input == 1738 || (input >= 200 && input < 203)) && input != 7)  {
 	  tracker--;
@@ -504,8 +506,7 @@ int main (void)  {
       if (argStop == 0)  {
 	tokenAmount--;
 	*(arguments + argAmount) = AEND(tokens, tokenAmount, cell, cellSizes, D, cellPointerCoors, pastCell);
-	arguments = realloc(arguments, sizeof(int) * (argAmount + 1));
-	free(tokens);
+	arguments = realloc(arguments, sizeof(int) * (argAmount + 2));
       }
     }
     // Execute commands:
@@ -535,7 +536,6 @@ int main (void)  {
 	for (i = 0; i != D; i++)  { // Figure out how big the cell array needs to be
 	  it *= *(cellSizes + i);
 	}
-	printf("%i\n", it);
 	free(cell);
 	cell = calloc(it, sizeof(int)); // Pointer to the cells
 	free(cellPointerCoors);
@@ -546,8 +546,6 @@ int main (void)  {
       if (currCommand == 502)  { // SETP
 	for (i = 0; i != it; i++)  {
 	  *(cell + i) = *(arguments + i);
-	  printf("%i\n", i);
-	  fflush(NULL);
 	}
       }
       if (currCommand == 505)  {
@@ -589,7 +587,7 @@ int main (void)  {
 	for (i2 = 0; i2 != i3; i2++)  {
 	  printf("%c ", *(cell + i2));
 	  if (i2 != 0)  {
-	    for (i = 0; i != D; i++)  {
+	    for (i = 1; i != D; i++)  {
 	      if ((i2 + 1) % *(cellSizes + i) == 0)  {
 		printf("\n");
 	      }
@@ -598,7 +596,7 @@ int main (void)  {
 	}
       }
       else  {
-        for (i2 = 1; i2 != argAmount + 1; i2++)  {
+        for (i2 = 0; i2 != argAmount + 1; i2++)  {
 	  printf("%c ", *(cell + *(i2 + arguments)));
 	}
       }
@@ -625,6 +623,5 @@ int main (void)  {
 	return -1;
       }
     }
-    free(arguments);
   }
 }
