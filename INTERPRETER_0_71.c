@@ -707,7 +707,6 @@ int main (int argc, char *argv[])  {
 	    i3 = *(ruleLocs + i) + (it * i2);
 	    *(pastCell + i3 + 1) = *(pastCell + i3 + 1);
 	  }
-	  printf("## %i\n", *(cell + i3));
 	  *(pastCell + i3) = *(cell + i3);
 	}
 	for (i = 0; i != it; i++)  { // Copy ruleCell into cell
