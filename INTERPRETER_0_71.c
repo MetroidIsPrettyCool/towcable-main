@@ -106,7 +106,7 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	  }
 	  i3 += *(valS + i2) * i4;
 	}
-	i3 += *(valS + dimensions) * i4 * pastAmount;
+	i3 += *(valS + dimensions) * i4;
 	*(tokens + currLoc) = (*(pastCell + i3) + 1) * -1;
       }
       if (currMultiOp == 307)  {
@@ -214,10 +214,11 @@ int main (int argc, char *argv[])  {
   int i; // General Purpose Counter
   int i2; // General Purpose Counter
   int i3; // General Purpose Counter
+  int i4; // General Purpose Counter
 
   int step = 0;
 
-  int input = 10; // General purpose input variable, used only in TSXX interperters
+  int input = 10; // General purpose input variable
 
   int D = 1; // Dimensions (infinite)
 
@@ -232,27 +233,21 @@ int main (int argc, char *argv[])  {
   }
 
   int *cell = calloc(i2, sizeof(int)); // Pointer to the cells
-
+  int *ruleCell = calloc(i2, sizeof(int)); // Array used for when rules or complexes are running
   int *cellPointerCoors = calloc(D, sizeof(int)); // Stores the cell pointer coordinates
-
   int *pastCell = calloc(i2 * pastAmount, sizeof(int));
 
   int tokenAmount; // Stores the number of tokens in the list
   int tracker;
   int executed;
-
   int *tokens = malloc(sizeof(int));;
 
   int argAmount;
-
   int *arguments = malloc(sizeof(int));
-
   int argStop;
 
   int currCommand;
-
   char inptStr [1000000];
-
   int inStrPtr;
 
   int init = 1; // Are we in initialization mode?
@@ -260,9 +255,15 @@ int main (int argc, char *argv[])  {
   int c;
 
   int inChr;
-
   int len;
 
+  int runRule = 0;
+  char **ruleStore = malloc(sizeof(char*));
+  int *ruleLocs;
+  int ruleLocAmount;
+
+  int largestRuleID = 0;
+  
   inChr = fgetc(fp);
   
   for (;;)  {
@@ -271,28 +272,39 @@ int main (int argc, char *argv[])  {
     arguments = malloc(sizeof(int) * 2);
     inStrPtr = 4;
 
-    strcpy(inptStr, ""); // Clear the input string
+    if (runRule == 0)  { // If we aren't running a rule or cmpx
+    
+      strcpy(inptStr, ""); // Clear the input string
 
-    for (inStrPtr; inChr  == ' ' || inChr  == '\t' || inChr  == '\n' || inChr  == '(' || inChr  == ')' || inChr == '!'; inChr = fgetc(fp))  { // Read all whitespace before command starts
-      if (inChr == '!')  {
-	inChr = fgetc(fp);
-	for (; inChr != '!'; inChr = fgetc(fp));
+      for (inStrPtr; inChr  == ' ' || inChr  == '\t' || inChr  == '\n' || inChr  == '(' || inChr  == ')' || inChr == '!'; inChr = fgetc(fp))  { // Read all whitespace before command starts
+	if (inChr == '!')  {
+	  inChr = fgetc(fp);
+	  for (; inChr != '!'; inChr = fgetc(fp));
+	}
       }
-    }
 
-    while (inChr != '.')  { // Read command into input string
-      len = strlen(inptStr);
+      while (inChr != '.')  { // Read command into input string
+	len = strlen(inptStr);
+	inptStr[len] = inChr;
+	inptStr[len + 1] = '\0';
+
+	inChr = fgetc(fp);
+      }
+
+      len = strlen(inptStr); // Read the period into the string
       inptStr[len] = inChr;
       inptStr[len + 1] = '\0';
 
       inChr = fgetc(fp);
+
     }
-
-    len = strlen(inptStr); // Read the period into the string
-    inptStr[len] = inChr;
-    inptStr[len + 1] = '\0';
-
-    inChr = fgetc(fp); 
+    else  {
+      i2 = 1;
+      for (i = 0; i != D; i++)  {
+	i2 *= *(cellSizes + i);
+	*(cellPointerCoors + i) = *(ruleLocs + i4) % i2;
+      }
+    }
     
     if (init == 1)  { // Initialiaztion commands
       if (*(inptStr) == 'D' && *(inptStr + 1) == 'I' && *(inptStr + 2) == 'M' && *(inptStr + 3) == 'N')  {
@@ -304,7 +316,7 @@ int main (int argc, char *argv[])  {
       else if (*(inptStr) == 'S' && *(inptStr + 1) == 'E' && *(inptStr + 2) == 'T' && *(inptStr + 3) == 'P')  {
 	currCommand = 502;
       }
-      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+      else if (*(inptStr) == 'R' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'L' && *(inptStr + 3) == 'E')  {
 	currCommand = 503;
       }
       else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
@@ -328,8 +340,11 @@ int main (int argc, char *argv[])  {
       else if (*(inptStr) == 'I' && *(inptStr + 1) == 'N' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
 	currCommand = 602;
       }
-      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+      else if (*(inptStr) == 'C' && *(inptStr + 1) == 'A' && *(inptStr + 2) == 'L' && *(inptStr + 3) == 'L')  {
 	currCommand = 603;
+      }
+      else if (*(inptStr) == 'R' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'L' && *(inptStr + 3) == 'E')  {
+	currCommand = 503;
       }
       else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
 	currCommand = 604;
@@ -575,6 +590,8 @@ int main (int argc, char *argv[])  {
 	}
 	free(cell);
 	cell = calloc(it, sizeof(int)); // Pointer to the cells
+	free(ruleCell);
+	ruleCell = calloc(it, sizeof(int)); // Pointer to the cells for rules or complexes
 	free(cellPointerCoors);
 	cellPointerCoors = calloc(D, sizeof(int)); // Stores the cell pointer coordinates
 	free(pastCell);
@@ -584,6 +601,14 @@ int main (int argc, char *argv[])  {
 	for (i = 0; i != it; i++)  {
 	  *(cell + i) = *(arguments + i);
 	}
+      }
+      if (currCommand == 503)  { // RULE
+	if (*arguments > largestRuleID)  { // If the ID of the current rule is greater than the previous largest ID
+	  largestRuleID = *arguments;
+	  ruleStore = realloc(ruleStore, sizeof(char*) * (largestRuleID + 1));
+	}
+	*(ruleStore + *arguments) = malloc(strlen(inptStr)); // Store the string
+	*(ruleStore + *arguments) = strcpy(*(ruleStore + *arguments), inptStr);
       }
       if (currCommand == 505)  {
 	init = 0;
@@ -598,10 +623,8 @@ int main (int argc, char *argv[])  {
 	for (i2 = 0; i2 != i3; i2++)  {
 	  printf("%d ", *(cell + i2));
 	  if (i2 != 0)  {
-	    for (i = 1; i != D; i++)  {
-	      if ((i2 + 1) % *(cellSizes + i) == 0)  {
-		printf("\n");
-	      }
+	    if ((i2 + 1) % *cellSizes == 0)  {
+	      printf("\n");
 	    }
 	  }
 	}
@@ -624,10 +647,8 @@ int main (int argc, char *argv[])  {
 	for (i2 = 0; i2 != i3; i2++)  {
 	  printf("%c ", *(cell + i2));
 	  if (i2 != 0)  {
-	    for (i = 1; i != D; i++)  {
-	      if ((i2 + 1) % *(cellSizes + i) == 0)  {
-		printf("\n");
-	      }
+	    if ((i2 + 1) % *cellSizes == 0)  {
+	      printf("\n");
 	    }
 	  }
 	}
@@ -649,6 +670,51 @@ int main (int argc, char *argv[])  {
       else  {
 	printf("ERR 004: IMPROPER ARGUMENT AMOUNT (%i)\n", argAmount);
 	return -1;
+      }
+    }
+    else if (currCommand == 603)  { // CALL
+      runRule = 1;
+      strcpy(inptStr, *(ruleStore + *arguments)); // Copy the rule into input
+      if (*(arguments + 1) != -1)  {
+	ruleLocAmount = argAmount - 1;
+	ruleLocs = malloc(sizeof(int) * ruleLocAmount);
+	for (i = 0; i != ruleLocAmount + 1; i++)  { // Copy all locations to be run upon into ruleLocs
+	  *(ruleLocs + i) = *(arguments + i + 1);
+	}
+      }
+      else  {
+	ruleLocAmount = it;
+	ruleLocs = malloc(sizeof(int) * ruleLocAmount);
+	for (i = 0; i != ruleLocAmount; i++)  { // Copy all locations to be run upon into ruleLocs
+	  *(ruleLocs + i) = i;
+	}
+      }
+      for (i = 0; i != it; i++)  { // Copy cell into ruleCell
+	*(ruleCell + i) = *(cell + i);
+      }
+      i4 = 0;
+    }
+    else if (currCommand == 503 && runRule == 1)  { // RULE
+      i2 = 1;
+      for (i = 3; i != argAmount + 1; i++)  {
+	i2 *= *(arguments + i);
+      }
+      *(ruleCell + *(ruleLocs + i4)) = (i2 >= 1) ? *(arguments + 1) : *(arguments + 2);
+      i4++;
+      if (i4 > ruleLocAmount)  { // Once we've gone through all the locations
+	for (i = 0; i != ruleLocAmount + 1; i++)  { // Update pastCell
+	  for (i2 = pastAmount - 2; i2 != -1; i2--)  {
+	    i3 = *(ruleLocs + i) + (it * i2);
+	    *(pastCell + i3 + 1) = *(pastCell + i3 + 1);
+	  }
+	  printf("## %i\n", *(cell + i3));
+	  *(pastCell + i3) = *(cell + i3);
+	}
+	for (i = 0; i != it; i++)  { // Copy ruleCell into cell
+	  *(cell + i) = *(ruleCell + i);
+	}
+	free(ruleLocs);
+	runRule = 0;
       }
     }
     else if (currCommand == 610)  { // EXIT
