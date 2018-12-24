@@ -286,6 +286,7 @@ int main (int argc, char *argv[])  {
       strcpy(inptStr, ""); // Clear the input string
 
       for (inStrPtr; inChr  == ' ' || inChr  == '\t' || inChr  == '\n' || inChr  == '(' || inChr  == ')' || inChr == '!'; inChr = fgetc(fp))  { // Read all whitespace before command starts
+	readAmount++;
 	if (inChr == '!')  {
 	  inChr = fgetc(fp);
 	  readAmount++;
@@ -295,7 +296,7 @@ int main (int argc, char *argv[])  {
 	}
       }
 
-      lastComm = readAmount;
+      lastComm = readAmount - 1;
 
       while (inChr != '.')  { // Read command into input string
 	len = strlen(inptStr);
@@ -311,7 +312,7 @@ int main (int argc, char *argv[])  {
       inptStr[len + 1] = '\0';
 
       inChr = fgetc(fp);
-      readAmount += 2;
+      readAmount++;
 
     }
     else  {
