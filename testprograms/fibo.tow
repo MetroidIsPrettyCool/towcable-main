@@ -1,0 +1,13 @@
+DIMN 1i.                                     !Set the environment to be 1-D!
+SIZE 1i.                                     !Set environment to be 1-wide!
+RULE 0i ADDN PAST (0i 0i) LOCN (@0i 0i) 1i.  !Adds the previous value to the current cell!
+RULE 1i 1i 1i 1i.                            !Sets the cell to 1!
+BEGN.                                        !Exit initializtion!
+OUPT 0i.                                     !Print 0!
+CALL 1i 0i.                                  !Set cell to 1!
+OUPT 0i.                                     !Print 1!
+LOOP 0i 10i.                                 !Loops 10 times!
+CALL 0i 0i.                                  !Add previous value to cell!
+OUPT 0i.                                     !Print it!
+LOTO 0i.                                     !Go back to the start of the loop!
+EXIT.                                        !Exit program!

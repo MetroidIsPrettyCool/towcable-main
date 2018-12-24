@@ -1,0 +1,21 @@
+DIMN 1i.
+SIZE 2i.
+SETP 1i 1i.
+
+RULE 0i 5i 12i ( ! If both cells are 1, then set the pointed cell to 5, otherwise, 2 !
+    EQ LOCN @0i 1i 
+    EQ LOCN @1i 1i.
+)
+
+RULE 1i 2i 5i ( ! If both cells are 1, then set the pointed cell to 2, otherwise, 5 !
+    EQ LOCN @0i 1i 
+    EQ LOCN +1i 1i.
+)
+
+BEGN.
+CALL 1i 0i. ! Call rule 1 on both cells!
+CALL 0i 1i.
+OUPT 0i 1i. ! Output both cells (duh) !
+OUPT PAST 0i 0i.
+STRO "Hello world!\n".
+EXIT.
