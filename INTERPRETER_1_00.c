@@ -211,6 +211,11 @@ int main (int argc, char *argv[])  {
 
   strcpy(filename, argv[1]);
   fp = fopen(filename, "r");
+
+  if (fp == NULL)  {
+    printf("ILLEGAL FILENAME OR FILEPATH\n");
+    return -1;
+  }
   
   srand(time(0)); // Seed the Random Number Generator with the current time
 
