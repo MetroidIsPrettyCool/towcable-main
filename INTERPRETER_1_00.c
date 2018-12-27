@@ -367,7 +367,7 @@ int main (int argc, char *argv[])  {
 	currCommand = 505;
       }
       else  {
-	printf("ERR 01: ILLEGAL COMMAND \"%c%c%c%c\"\n", *(inptStr), *(inptStr + 1), *(inptStr + 2), *(inptStr + 3));
+	printf("ERR 01: ILLEGAL OR UNEXPECTED COMMAND \"%c%c%c%c\"\n", *(inptStr), *(inptStr + 1), *(inptStr + 2), *(inptStr + 3));
 	return -1;
       }
     }
@@ -458,8 +458,12 @@ int main (int argc, char *argv[])  {
       else if (*(inptStr) == 'E' && *(inptStr + 1) == 'X' && *(inptStr + 2) == 'I' && *(inptStr + 3) == 'T')  {
 	currCommand = 610;
       }
+      else if (*(inptStr) == 'T' && *(inptStr + 1) == 'E' && *(inptStr + 2) == 'A' && *(inptStr + 3) == 'P')  {
+	printf("ERR 42: I'M A TEAPOT\n");
+	return -1;
+      }
       else  {
-	printf("ERR 01: ILLEGAL COMMAND \"%c%c%c%c\"\n", *(inptStr), *(inptStr + 1), *(inptStr + 2), *(inptStr + 3));
+	printf("ERR 01: ILLEGAL OR UNEXPECTED COMMAND \"%c%c%c%c\"\n", *(inptStr), *(inptStr + 1), *(inptStr + 2), *(inptStr + 3));
 	return -1;
       }
     }
@@ -573,6 +577,10 @@ int main (int argc, char *argv[])  {
 	      inStrPtr++;
 	    }
 	    else if (*(inptStr + inStrPtr) == '&')  {
+	      if (argAmount != 1 || (currCommand < 600 || currCommand > 605 || currCommand == 602))  {
+		printf("ERR 23: & IN ILLEGAL LOCATION\n");
+		return -1;
+	      }
 	      input = 100;
 	      inStrPtr++;
 	    }
