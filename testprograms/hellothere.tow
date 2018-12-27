@@ -1,8 +1,0 @@
-DIMN 2i.
-SIZE 5i 2i.
-SETP 72i 69i 76i 76i 79i 84i 72i 69i 82i 69i. !Puts hello there into cells!
-BEGN. (
-  CRPT &.
-  STRO "General Kenobi!\nYou are a bold one!\n". !Prints Grievous' lines!
-)
-EXIT.
