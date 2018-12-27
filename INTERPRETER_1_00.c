@@ -3,6 +3,7 @@
 #include <time.h>
 #include <ctype.h>
 #include <string.h>
+#include <math.h>
 
 const int pastAmount = 100; // The maximum amount of time you can go back with PAST
 
@@ -50,6 +51,9 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
   int i3;
   int i4;
   int i5;
+
+  int debug;
+  
   int currMultiOp;
   int currLoc;
   int *valS = malloc(sizeof(int) * (dimensions + 1));
@@ -68,6 +72,14 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
     }
     currMultiOp = *(tokens + i);
     currLoc = i;
+    /* printf("--%i %i--\n", *cellPointerCoors, *(cellPointerCoors + 1)); */
+    for (debug = 0; debug != 1000; debug++)  {
+      debug += 4;
+    }
+    printf(" \b");
+    if (currMultiOp < 0 || currMultiOp > 1000)  {
+      getchar();
+    }
     if (currMultiOp != 10)  {
       for (i2 = 0; i2 != ((currMultiOp == 306) ? dimensions + 1 : ((currMultiOp == 307) ? (2 * dimensions) : 2)); i2++)  {
 	for (i = currLoc; *(tokens + i) >= 300 || *(tokens + i) == 0; i++);
@@ -131,7 +143,7 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	    i3 += *(valS + (2 * i2 + 1)) * i4;
 	  }
 	  if (*(valS + (2 * i2)) == 201) {
-	    while (*(cellPointerCoors + i2) + *(valS + (2 * i2) + 1) > *(cellSizes + i2))  {
+	    while (*(cellPointerCoors + i2) + *(valS + (2 * i2) + 1) >= *(cellSizes + i2))  {
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
@@ -151,54 +163,67 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	    i3 += (*(cellPointerCoors + i2) - *(valS + (2 * i2 + 1))) * i4;
 	  }
 	}
+	/* printf("**********************************************************************%i  %i\n", i3, *(cell + i3)); */
 	*(tokens + currLoc) = (*(cell + i3) + 1) * -1;
       }
       if (currMultiOp == 400)  {
 	if (*valS == *(valS + 1))  {
 	  *(tokens + currLoc) = -2;
+	  /* printf("EQP\n"); */
 	}
 	else {
 	  *(tokens + currLoc) = -1;
+	  /* printf("EQF\n"); */
 	}
       }
       if (currMultiOp == 401)  {
 	if (*valS != *(valS + 1))  {
 	  *(tokens + currLoc) = -2;
+	  /* printf("NQP\n"); */
 	}
 	else {
 	  *(tokens + currLoc) = -1;
+	  /* printf("NQF\n"); */
 	}
       }
       if (currMultiOp == 402)  {
 	if (*valS > *(valS + 1))  {
 	  *(tokens + currLoc) = -2;
+	  /* printf("GTP\n"); */
 	}
 	else {
 	  *(tokens + currLoc) = -1;
+	  /* printf("GTF\n"); */
 	}
       }
       if (currMultiOp == 403)  {
 	if (*valS >= *(valS + 1))  {
 	  *(tokens + currLoc) = -2;
+	  /* printf("GEP\n"); */
 	}
 	else {
 	  *(tokens + currLoc) = -1;
+	  /* printf("GEF\n"); */
 	}
       }
       if (currMultiOp == 404)  {
 	if (*valS < *(valS + 1))  {
 	  *(tokens + currLoc) = -2;
+	  /* printf("LTP\n"); */
 	}
 	else {
 	  *(tokens + currLoc) = -1;
+	  /* printf("LTF\n"); */
 	}
       }
       if (currMultiOp == 405)  {
 	if (*valS <= *(valS + 1))  {
 	  *(tokens + currLoc) = -2;
+	  /* printf("LEP\n"); */
 	}
 	else {
 	  *(tokens + currLoc) = -1;
+	  /* printf("LEF\n"); */
 	}
       }
     }
@@ -360,13 +385,16 @@ int main (int argc, char *argv[])  {
 
     }
     else  {
-      i2 = 1;
+      i3 = 1;
+      /* printf("%i   + ", *(ruleLocs + i4)); */
       for (i = 0; i != D; i++)  {
-	i2 *= *(cellSizes + i);
-	*(cellPointerCoors + i) = *(ruleLocs + i4) % i2;
+	i2 = *(cellSizes + i);
+	*(cellPointerCoors + i) = floor((*(ruleLocs + i4) / i3) % i2);
+	/* printf("%i,", *(cellPointerCoors + i)); */
+	i3 *= *(cellSizes + i);
       }
+      /* printf("\n"); */
     }
-    
     if (init == 1)  { // Initialiaztion commands
       if (*(inptStr) == 'D' && *(inptStr + 1) == 'I' && *(inptStr + 2) == 'M' && *(inptStr + 3) == 'N')  {
 	currCommand = 500;
@@ -659,6 +687,7 @@ int main (int argc, char *argv[])  {
       if (argStop == 0)  {
 	tokenAmount--;
 	*(arguments + argAmount) = AEND(tokens, tokenAmount, cell, cellSizes, D, cellPointerCoors, pastCell);
+	/* printf("RS = %i\n", *(arguments + argAmount)); */
 	arguments = realloc(arguments, sizeof(int) * (argAmount + 2));
       }
     }
@@ -883,7 +912,7 @@ int main (int argc, char *argv[])  {
 	    *(ruleLocs + i) = i;
 	  }
 	}
-	for (i = 0; i != it; i++)  { // Copy cell into ruleCell
+	for (i = 0; i != it; i++)  { // Copycell into ruleCell
 	  *(ruleCell + i) = *(cell + i);
 	}
 	i4 = 0;
@@ -957,24 +986,28 @@ int main (int argc, char *argv[])  {
 	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
 	  return -1;
 	}
-	/* printf("%i  %i  %i  %i\n", *arguments, *(arguments + 1), *(arguments + i5), i5); */
-	for (i5 = 2; i5 != argAmount; i5 = i + 1)  {
+	for (i5 = 2; i5 < argAmount; i5 = i + 1)  {
 	  if (*(arguments + 1) == -2 || *(arguments + 2) == -2 || *(arguments + i5) == -2 || *(arguments + i5 + 1) == -2)  {
 	    printf("ERR 03: INVALID PARAMETER AMOUNT\n");
 	    return -1;
 	  }
 	  i2 = 1;
-	  for (i = i5 + 1; (*(arguments + i) != -2) && (i < argAmount); i++)  {
+	  /* printf("^^%i^^  %i\n", argAmount, i5); */
+	  for (i = i5 + 1; (*(arguments + i) != -2) && (i != argAmount + 1); i++)  {
 	    i2 *= *(arguments + i);
 	  }
 	  if (i2 > 1)  {
 	    printf("ERR 11: NON-BOOLEAN RESULT FOR TEST\n");
 	    return -1;
 	  }
-	  *(ruleCell + *(ruleLocs + i4)) = *(arguments + 1);
 	  if (i2 == 1)  {
+	    /* printf("p %i %i %i\n", i5, *(arguments + i5), argAmount); */
 	    *(ruleCell + *(ruleLocs + i4)) = *(arguments + i5);
 	    i = argAmount - 1;
+	  }
+	  else  {
+	    /* printf("f  %i  %i  %i\n", i5, *(arguments + 1), *arguments); */
+	    *(ruleCell + *(ruleLocs + i4)) = *(arguments + 1);
 	  }
 	}
 	i4++;
@@ -1057,6 +1090,7 @@ int main (int argc, char *argv[])  {
 	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
 	  return -1;
 	}
+	/* printf("exiting\n"); */
 	return 0;
       }
     }
