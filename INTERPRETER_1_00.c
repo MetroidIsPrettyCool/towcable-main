@@ -95,7 +95,12 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
  	*(tokens + currLoc) = ((*valS * *(valS + 1)) + 1) * -1;
       }
       if (currMultiOp == 304)  {
- 	*(tokens + currLoc) = ((*valS / *(valS + 1)) + 1) * -1;
+	if (*(valS + 1) == 0)  {
+	  *(tokens + currLoc) = -1;
+	}
+	else  {
+	  *(tokens + currLoc) = ((*valS / *(valS + 1)) + 1) * -1;
+	}
       }
       if (currMultiOp == 305)  {
  	*(tokens + currLoc) = ((*valS % *(valS + 1)) + 1) * -1;
@@ -747,7 +752,7 @@ int main (int argc, char *argv[])  {
 	*(ruleStore + *arguments) = strcpy(*(ruleStore + *arguments), inptStr);
       }
       else if (currCommand == 504 && (step == 2 || step == 3))  { // CMPX
-	if (argAmount <= 2)  {
+	if (argAmount <= 2 || *arguments == -2)  {
 	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
 	  return -1;
 	}
@@ -804,6 +809,7 @@ int main (int argc, char *argv[])  {
 	    }
 	    printf("%d ", *(cell + *(i2 + arguments)));
 	  }
+	  printf("\n");
 	}
       }
       else if (currCommand == 601)  { // CRPT
@@ -833,6 +839,7 @@ int main (int argc, char *argv[])  {
 	    }
 	    printf("%c ", *(cell + *(i2 + arguments)));
 	  }
+	  printf("\n");
 	}
       }
       else if (currCommand == 602)  { // INPT
@@ -950,7 +957,12 @@ int main (int argc, char *argv[])  {
 	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
 	  return -1;
 	}
+	/* printf("%i  %i  %i  %i\n", *arguments, *(arguments + 1), *(arguments + i5), i5); */
 	for (i5 = 2; i5 != argAmount; i5 = i + 1)  {
+	  if (*(arguments + 1) == -2 || *(arguments + 2) == -2 || *(arguments + i5) == -2 || *(arguments + i5 + 1) == -2)  {
+	    printf("ERR 03: INVALID PARAMETER AMOUNT\n");
+	    return -1;
+	  }
 	  i2 = 1;
 	  for (i = i5 + 1; (*(arguments + i) != -2) && (i < argAmount); i++)  {
 	    i2 *= *(arguments + i);
