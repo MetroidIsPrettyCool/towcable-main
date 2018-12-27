@@ -56,6 +56,9 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
   if (tokenAmount == 1 && *(tokens + 1) == 100) {
     return -1;
   }
+  if (tokenAmount == 1 && *(tokens + 1) == 102) {
+    return -2;
+  }
   if (tokenAmount == 1 && *(tokens + 1) == 1738) {
     printf("This is a dead meme\n");
     return 609;
@@ -215,6 +218,7 @@ int main (int argc, char *argv[])  {
   int i2; // General Purpose Counter
   int i3; // General Purpose Counter
   int i4; // General Purpose Counter
+  int i5; // General Purpose Counter
 
   int step = 0;
 
@@ -265,6 +269,12 @@ int main (int argc, char *argv[])  {
 
   int largestRuleID = 0;
   int prevLargestRuleID;
+
+  char **cmpxStore = malloc(sizeof(char*));
+  int *allocedCmpxs = calloc(0, sizeof(int));
+
+  int largestCmpxID = 0;
+  int prevLargestCmpxID;
 
   long readAmount = 0;
   long lastComm = 0;
@@ -360,7 +370,7 @@ int main (int argc, char *argv[])  {
       else if (*(inptStr) == 'R' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'L' && *(inptStr + 3) == 'E')  {
 	currCommand = 503;
       }
-      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+      else if (*(inptStr) == 'C' && *(inptStr + 1) == 'M' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'X')  {
 	currCommand = 504;
       }
       else if (*(inptStr) == 'B' && *(inptStr + 1) == 'E' && *(inptStr + 2) == 'G' && *(inptStr + 3) == 'N')  {
@@ -387,8 +397,11 @@ int main (int argc, char *argv[])  {
       else if (*(inptStr) == 'R' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'L' && *(inptStr + 3) == 'E')  {
 	currCommand = 503;
       }
-      else if (*(inptStr) == '~' && *(inptStr + 1) == 'U' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'T')  {
+      else if (*(inptStr) == 'C' && *(inptStr + 1) == 'A' && *(inptStr + 2) == 'L' && *(inptStr + 3) == 'X')  {
 	currCommand = 604;
+      }
+      else if (*(inptStr) == 'C' && *(inptStr + 1) == 'M' && *(inptStr + 2) == 'P' && *(inptStr + 3) == 'X')  {
+	currCommand = 504;
       }
       else if (*(inptStr) == 'L' && *(inptStr + 1) == 'O' && *(inptStr + 2) == 'O' && *(inptStr + 3) == 'P')  {
 	currCommand = 605;
@@ -430,6 +443,9 @@ int main (int argc, char *argv[])  {
 	      }
 	      else if (*(inptStr + inStrPtr) == '\"')  {
 		printf("\"");
+	      }
+	      else if (*(inptStr + inStrPtr) == '\\')  {
+		printf("\\");
 	      }
 	      else  {
 		printf("ERR 22: ILLEGAL ESCAPE SEQUENCE\n");
@@ -479,7 +495,7 @@ int main (int argc, char *argv[])  {
 	  *(tokens + tokenAmount) = input; // Put the input into tokens
 	  tokens = realloc(tokens, (sizeof(int) * (tokenAmount + 2))); // Increase the size of tokens to fit the amount of tokens
 	}
-	if ((input < 0 || input == 100 || input == 1738 || (input >= 200 && input < 203)) && input != 7)  {
+	if ((input < 0 || input == 100 || input == 102 || input == 1738 || (input >= 200 && input < 203)) && input != 7)  {
 	  tracker--;
 	}
 	else if (input != 7)  {
@@ -577,7 +593,7 @@ int main (int argc, char *argv[])  {
 	      inStrPtr++;
 	    }
 	    else if (*(inptStr + inStrPtr) == '&')  {
-	      if (argAmount != 1 || (currCommand < 600 || currCommand > 605 || currCommand == 602))  {
+	      if ((argAmount != 1 && currCommand != 600 && currCommand != 601) || ((currCommand < 599 && currCommand > 605) || currCommand == 602))  {
 		printf("ERR 23: & IN ILLEGAL LOCATION\n");
 		return -1;
 	      }
@@ -588,6 +604,14 @@ int main (int argc, char *argv[])  {
 	      input = 101;
 	      if (tracker != 2 && tokenAmount != 0)  {
 		printf("ERR 04: ONE OR MORE ARGUMENTS TERMINATED EARLY\n");
+		return -1;
+	      }
+	      inStrPtr++;
+	    }
+	    else if (*(inptStr + inStrPtr) == ',')  {
+	      input = 102;
+	      if (currCommand != 504)  {
+		printf("ERR 24: COMMA OUTSIDE CMPX\n");
 		return -1;
 	      }
 	      inStrPtr++;
@@ -717,6 +741,28 @@ int main (int argc, char *argv[])  {
 	*(ruleStore + *arguments) = malloc(strlen(inptStr)); // Store the string
 	*(ruleStore + *arguments) = strcpy(*(ruleStore + *arguments), inptStr);
       }
+      else if (currCommand == 504 && (step == 2 || step == 3))  { // CMPX
+	if (argAmount <= 2)  {
+	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
+	  return -1;
+	}
+	if (*arguments > largestCmpxID)  { // If the ID of the current rule is greater than the previous largest ID
+	  prevLargestCmpxID = largestCmpxID;
+	  largestCmpxID = *arguments;
+	  allocedCmpxs = realloc(allocedCmpxs, sizeof(int) * largestCmpxID);
+	  for (i3 = prevLargestCmpxID - 1; i3 != largestCmpxID - 1; i3++)  {
+	    *(allocedCmpxs + i3) = 0;
+	  }
+	  cmpxStore = realloc(cmpxStore, sizeof(char*) * (largestCmpxID + 1));
+	}
+	if (*(allocedCmpxs + *arguments) == 1)  {
+	  printf("ERR 12: ID ALREADY IN USE\n");
+	  return -1;
+	}
+	*(allocedCmpxs + *arguments) = 1;
+	*(cmpxStore + *arguments) = malloc(strlen(inptStr)); // Store the string
+	*(cmpxStore + *arguments) = strcpy(*(cmpxStore + *arguments), inptStr);
+      }
       else if (currCommand == 505 && (step == 2 || step == 3))  {
 	init = 0;
       }
@@ -754,9 +800,6 @@ int main (int argc, char *argv[])  {
 	    printf("%d ", *(cell + *(i2 + arguments)));
 	  }
 	}
-	if (argAmount != 0 || *arguments != -1 || D == 1)  {
-	  printf("\n");
-	}
       }
       else if (currCommand == 601)  { // CRPT
 	if (argAmount == -1 || (argAmount != 0 && *arguments == -1))  {
@@ -786,9 +829,6 @@ int main (int argc, char *argv[])  {
 	    printf("%c ", *(cell + *(i2 + arguments)));
 	  }
 	}
-	if (argAmount != 0 || *arguments != -1 || D == 1)  {
-	  printf("\n");
-	}
       }
       else if (currCommand == 602)  { // INPT
 	if (argAmount != 0)  {
@@ -807,7 +847,7 @@ int main (int argc, char *argv[])  {
 	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
 	  return -1;
 	}
-	if (*(allocedRules + *arguments) == 0)  {
+	if (*(allocedRules + *arguments) != 1 || *arguments > largestRuleID)  {
 	  printf("ERR 17: CALLING NON-EXISTENT RULE OR CMPX\n");
 	  return -1;
 	}
@@ -866,6 +906,76 @@ int main (int argc, char *argv[])  {
 	  runRule = 0;
 	}
       }
+      else if (currCommand == 604)  { // CALX
+	if (argAmount == -1)  {
+	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
+	  return -1;
+	}
+	if (*(allocedCmpxs + *arguments) != 1 || *arguments > largestCmpxID)  {
+	  printf("ERR 17: CALLING NON-EXISTENT RULE OR CMPX\n");
+	  return -1;
+	}
+	runRule = 1;
+	strcpy(inptStr, *(cmpxStore + *arguments)); // Copy the rule into input
+	if (*(arguments + 1) != -1)  {
+	  ruleLocAmount = argAmount - 1;
+	  ruleLocs = malloc(sizeof(int) * ruleLocAmount);
+	  for (i = 0; i != ruleLocAmount + 1; i++)  { // Copy all locations to be run upon into ruleLocs
+	    if (*(arguments + i + 1) >= it)  {
+	      printf("ERR 18: RULE OR CMPX ACCESSING ILLEGAL LOCATION\n");
+	      return -1;
+	    }
+	    *(ruleLocs + i) = *(arguments + i + 1);
+	  }
+	}
+	else  {
+	  ruleLocAmount = it;
+	  ruleLocs = malloc(sizeof(int) * ruleLocAmount);
+	  for (i = 0; i != ruleLocAmount; i++)  { // Copy all locations to be run upon into ruleLocs
+	    *(ruleLocs + i) = i;
+	  }
+	}
+	for (i = 0; i != it; i++)  { // Copy cell into ruleCell
+	  *(ruleCell + i) = *(cell + i);
+	}
+	i4 = 0;
+      }
+      else if (currCommand == 504 && runRule == 1)  { // CMPX
+	if (argAmount <= 2)  {
+	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
+	  return -1;
+	}
+	for (i5 = 2; i5 != argAmount; i5 = i + 1)  {
+	  i2 = 1;
+	  for (i = i5 + 1; (*(arguments + i) != -2) && (i < argAmount); i++)  {
+	    i2 *= *(arguments + i);
+	  }
+	  if (i2 > 1)  {
+	    printf("ERR 11: NON-BOOLEAN RESULT FOR TEST\n");
+	    return -1;
+	  }
+	  *(ruleCell + *(ruleLocs + i4)) = *(arguments + 1);
+	  if (i2 == 1)  {
+	    *(ruleCell + *(ruleLocs + i4)) = *(arguments + i5);
+	    i = argAmount - 1;
+	  }
+	}
+	i4++;
+	if (i4 > ruleLocAmount)  { // Once we've gone through all the locations
+	  for (i = 0; i != ruleLocAmount + 1; i++)  { // Update pastCell
+	    for (i2 = pastAmount - 2; i2 != -1; i2--)  {
+	      i3 = *(ruleLocs + i) + (it * i2);
+	      *(pastCell + i3 + 1) = *(pastCell + i3 + 1);
+	    }
+	    *(pastCell + i3) = *(cell + i3);
+	  }
+	  for (i = 0; i != it; i++)  { // Copy ruleCell into cell
+	    *(cell + i) = *(ruleCell + i);
+	  }
+	  free(ruleLocs);
+	  runRule = 0;
+	}
+      }
       else if (currCommand == 605)  { // LOOP
 	if (argAmount != 1)  {
 	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
@@ -901,7 +1011,7 @@ int main (int argc, char *argv[])  {
 	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
 	  return -1;
 	}
-	if (*(allocedLoops + *arguments) == 0)  {
+	if (*(allocedLoops + *arguments) != 1 || *arguments > largestLoopID)  {
 	  printf("ERR 16: CALLING NON-EXISTENT LOOP\n");
 	  return -1;
 	}

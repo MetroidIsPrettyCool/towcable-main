@@ -55,6 +55,7 @@ Other:
   & 100
   r 1738
   . 101
+  , 102
   
 Basic Argument Structure
 
@@ -121,7 +122,7 @@ Examples:
 
 IF
 
-IF ARG ARG (Used only by conditional statements. Cannot be operated on by MultiOps)
+IF ARG ARG (Used only by conditional statements. Shouldn't be operated on by MultiOps (i.e. You can, but why would you?))
 
 Examples:
 
@@ -147,11 +148,10 @@ COMMAND ARG IF IF ARG ARG. (Again, argument number and makeup varies, this is ju
 Examples:
 COND EQ 7i @ 8i 7i 9i.
 RULE 79i 17i + 2i NQ 58i +7i LT + 1i - 1i.
-CMPX 66i 2i GE 6i - 2i @ 6i GT 1i + 0i.
 
 & Argument Structure
 
-COMMAND ARG ARG/&. (only LOOP uses &, so this is the only way this can be written)
+COMMAND ARG ARG/&.
 
 Examples:
 
@@ -161,6 +161,19 @@ LOOP 194i &.
 STRO Argument Structure:
 
 STRO STRING.
+
+Examples:
+
+STRO "Hello World\n".
+STRO "Stringy\tmcStringface\n".
+
+Complex argument structure
+
+CMPX ARG ARG ARG IF... , ARG IF... , ...
+
+Examples:
+
+CMPX 0i 2i 4i EQ 2i 2i 5i EQ LOCN @ 4i 2i.
 
 Extra Notes:
 
@@ -194,6 +207,7 @@ ERR 20: MISSING DOUBLE QUOTE
 ERR 21: MISSING PERIOD
 ERR 22: ILLEGAL ESCAPE SEQUENCE
 ERR 23: & IN ILLEGAL LOCATION
+ERR 24: COMMA OUTSIDE CMPX
 ERR 42: I'M A TEAPOT
 
 Interpreter only errors
