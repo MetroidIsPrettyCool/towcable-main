@@ -136,7 +136,7 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	    i3 += (*(cellPointerCoors + i2) + *(valS + (2 * i2 + 1))) * i4;
 	  }
 	  if (*(valS + (2 * i2)) == 202) {
-	    while (*(cellPointerCoors + i2) - *(valS + (2 * i2) + 1) > *(cellSizes + i2))  {
+	    while (*(cellPointerCoors + i2) - *(valS + (2 * i2) + 1) < 0)  {
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
@@ -1064,5 +1064,3 @@ int main (int argc, char *argv[])  {
     }
   }
 }
-
-
