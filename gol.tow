@@ -1,11 +1,11 @@
 DIMN 2i.
 SIZE 30i 30i.
 RULE 0i 1i 1i 1i. !Used to set up the initial board!
-CMPX 0i 0i ( !Don't change if no rule applies!
+CMPX 0i LOCN +0i +0i ( !Don't change if no rule applies!
 0i EQ LOCN +0i +0i 1i LT ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 2i, !Rule 1!
 1i EQ LOCN +0i +0i 1i EQ ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 2i, !Rule 2!
 1i EQ LOCN +0i +0i 1i EQ ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 3i, !Rule 2 again!
-0i EQ LOCN +0i +0i 1i GT ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 7i, !Rule 3! 
+0i EQ LOCN +0i +0i 1i GT ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 3i, !Rule 3! 
 1i EQ LOCN +0i +0i 0i EQ ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 3i. !Rule 4!
 )
 BEGN.
