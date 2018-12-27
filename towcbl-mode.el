@@ -13,7 +13,6 @@
 
 (setq towcbl-mode-syntax-table
       (let ( (synTable (make-syntax-table)))
-        ;; python style comment: “# …”
         (modify-syntax-entry ?! "!" synTable)
         synTable))
 
