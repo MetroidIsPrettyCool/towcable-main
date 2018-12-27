@@ -1,0 +1,21 @@
+DIMN 1i.
+SIZE 100i.
+RULE 1i 42i 42i 1i. !Used to set a cell to 1, no matter what!
+RULE 0i 32i 32i 1i. !Used to set a cell to 0, no matter what!
+CMPX 60i 0i !Full rule 60 implementaion!
+32i EQ LOCN -1i 42i EQ LOCN +0i 42i EQ LOCN +1i 42i,  !111 0!
+32i EQ LOCN -1i 42i EQ LOCN +0i 42i EQ LOCN +1i 32i,  !110 0!
+42i EQ LOCN -1i 42i EQ LOCN +0i 32i EQ LOCN +1i 42i,  !101 1!
+42i EQ LOCN -1i 42i EQ LOCN +0i 32i EQ LOCN +1i 32i,  !100 1!
+42i EQ LOCN -1i 32i EQ LOCN +0i 42i EQ LOCN +1i 42i,  !011 1!
+42i EQ LOCN -1i 32i EQ LOCN +0i 42i EQ LOCN +1i 32i,  !010 1!
+32i EQ LOCN -1i 32i EQ LOCN +0i 32i EQ LOCN +1i 42i,  !001 0!
+32i EQ LOCN -1i 32i EQ LOCN +0i 32i EQ LOCN +1i 32i.  !000 0!
+BEGN.
+CALL 0i &.
+CALL 1i 0i.
+LOOP 0i 100i.
+CRPT &.
+CALX 60i &.
+LOTO 0i.
+EXIT.
