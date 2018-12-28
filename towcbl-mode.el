@@ -5,7 +5,7 @@
       '(
 	("[0-9]+i" . font-lock-constant-face)
 	("@\\|\+\\|\-\\|&" . font-lock-warning-face)
-	("\\(\\(ADD\\|SUB\\|MUL\\|DIV\\|MOD\\|LOC\\)N\\)\\|RAND\\|PAST" . font-lock-function-name-face)
+	("\\(\\(ADD\\|SUB\\|MUL\\|DIV\\|MOD\\|LOC\\)N\\)\\|RAND\\|PAST\\|ATLO" . font-lock-function-name-face)
 	("DIMN\\|SIZE\\|SETP\\|RULE\\|CMPX\\|BEGN\\|OUPT\\|CRPT\\|INPT\\|CALL\\|CALX\\|LOOP\\|LOTO\\|COND\\|ENDC\\|STRO\\|EXIT" . font-lock-builtin-face)
 	("\\(E\\|N\\)Q\\|\\(G\\|L\\)\\(T\\|E\\)" . font-lock-keyword-face)))
 
