@@ -767,7 +767,7 @@ int main (int argc, char *argv[])  {
 	  prevLargestRuleID = largestRuleID;
 	  largestRuleID = *arguments;
 	  allocedRules = realloc(allocedRules, sizeof(int) * largestRuleID);
-	  for (i3 = prevLargestRuleID - 1; i3 != largestRuleID - 1; i3++)  {
+	  for (i3 = prevLargestRuleID; i3 != largestRuleID - 1; i3++)  {
 	    *(allocedRules + i3) = 0;
 	  }
 	  ruleStore = realloc(ruleStore, sizeof(char*) * (largestRuleID + 1));
@@ -788,8 +788,8 @@ int main (int argc, char *argv[])  {
 	if (*arguments > largestCmpxID)  { // If the ID of the current rule is greater than the previous largest ID
 	  prevLargestCmpxID = largestCmpxID;
 	  largestCmpxID = *arguments;
-	  allocedCmpxs = realloc(allocedCmpxs, sizeof(int) * largestCmpxID);
-	  for (i3 = prevLargestCmpxID - 1; i3 != largestCmpxID - 1; i3++)  {
+	  allocedCmpxs = realloc(allocedCmpxs, sizeof(int) * (largestCmpxID + 1));
+	  for (i3 = prevLargestCmpxID; i3 != largestCmpxID - 1; i3++)  {
 	    *(allocedCmpxs + i3) = 0;
 	  }
 	  cmpxStore = realloc(cmpxStore, sizeof(char*) * (largestCmpxID + 1));
