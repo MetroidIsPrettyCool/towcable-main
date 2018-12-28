@@ -1,0 +1,26 @@
+DIMN 2i.
+SIZE 38i 50i.
+RULE 0i 1i 1i 1i. !Used to set up the initial board!
+RULE 1i 32i 42i EQ LOCN +0i +0i 0i. !Turns the board into graphics mode!
+RULE 2i 0i 1i EQ LOCN +0i +0i 32i. !Takes the board out of graphics mode!
+CMPX 0i LOCN +0i +0i ( !Don't change if no rule applies!
+0i EQ LOCN +0i +0i 1i LT ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 2i, !Rule 1!
+1i EQ LOCN +0i +0i 1i EQ ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 2i, !Rule 2!
+1i EQ LOCN +0i +0i 1i EQ ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 3i, !Rule 2 again!
+0i EQ LOCN +0i +0i 1i GT ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 3i, !Rule 3! 
+1i EQ LOCN +0i +0i 0i EQ ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 3i. !Rule 4!
+)
+BEGN.
+CALL 0i 61i 62i 97i 101i 126i 134i 140i 164i 166i 171i 172i 174i 178i 187i 188i 205i 206i 210i 216i 225i 226i 229i 230i 243i 244i 249i 253i 267i 268i 281i 282i 289i 290i 316i 318i 354i. !Sets up the board!
+CALL 1i &.
+CRPT &.
+CALL 2i &.
+STRO "--------------------------------------------------------------------\n".
+LOOP 0i &.
+CALX 0i &.
+CALL 1i &.
+CRPT &.
+CALL 2i &.
+STRO "--------------------------------------------------------------------\n".
+LOTO 0i.
+EXIT.
