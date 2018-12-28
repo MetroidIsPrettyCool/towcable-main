@@ -908,7 +908,7 @@ int main (int argc, char *argv[])  {
 	else  {
 	  ruleLocAmount = it;
 	  ruleLocs = malloc(sizeof(int) * ruleLocAmount);
-	  for (i = 0; i != ruleLocAmount; i++)  { // Copy all locations to be run upon into ruleLocs
+	  for (i = 0; i != ruleLocAmount + 1; i++)  { // Copy all locations to be run upon into ruleLocs
 	    *(ruleLocs + i) = i;
 	  }
 	}
@@ -972,7 +972,7 @@ int main (int argc, char *argv[])  {
 	else  {
 	  ruleLocAmount = it;
 	  ruleLocs = malloc(sizeof(int) * ruleLocAmount);
-	  for (i = 0; i != ruleLocAmount; i++)  { // Copy all locations to be run upon into ruleLocs
+	  for (i = 0; i != ruleLocAmount + 1; i++)  { // Copy all locations to be run upon into ruleLocs
 	    *(ruleLocs + i) = i;
 	  }
 	}
