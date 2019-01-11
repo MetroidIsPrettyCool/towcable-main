@@ -259,10 +259,10 @@ int main (int argc, char *argv[])  {
     it *= *(cellSizes + i);
   }
 
-  int *cell = calloc(i2, sizeof(int)); // Pointer to the cells
-  int *ruleCell = calloc(i2, sizeof(int)); // Array used for when rules or complexes are running
+  int *cell = calloc(it, sizeof(int)); // Pointer to the cells
+  int *ruleCell = calloc(it, sizeof(int)); // Array used for when rules or complexes are running
   int *cellPointerCoors = calloc(D, sizeof(int)); // Stores the cell pointer coordinates
-  int *pastCell = calloc(i2 * pastAmount, sizeof(int));
+  int *pastCell = calloc(it * pastAmount, sizeof(int));
 
   int tokenAmount; // Stores the number of tokens in the list
   int tracker;
@@ -287,14 +287,14 @@ int main (int argc, char *argv[])  {
   int runRule = 0;
   char **ruleStore = malloc(sizeof(char*));
   int *ruleLocs;
-  int *allocedRules = calloc(0, sizeof(int));
+  int *allocedRules = calloc(1, sizeof(int));
   int ruleLocAmount;
 
   int largestRuleID = 0;
   int prevLargestRuleID;
 
   char **cmpxStore = malloc(sizeof(char*));
-  int *allocedCmpxs = calloc(0, sizeof(int));
+  int *allocedCmpxs = calloc(1, sizeof(int));
 
   int largestCmpxID = 0;
   int prevLargestCmpxID;
@@ -305,7 +305,7 @@ int main (int argc, char *argv[])  {
   int *loopAmounts = malloc(sizeof(int));
   int largestLoopID = 0;
   int prevLargestLoopID;
-  int *allocedLoops = calloc(0, sizeof(int));
+  int *allocedLoops = calloc(1, sizeof(int));
   int calledLoop = 0;
 
   int inCond = 0;
@@ -731,6 +731,7 @@ int main (int argc, char *argv[])  {
 	free(pastCell);
 	pastCell = calloc(it * pastAmount, sizeof(int));
 	step = 2;
+
       }
       else if (currCommand == 501 && step > 1)  { // SIZE ERROR
 	printf("ERR 09: MULTIPLE CALLS TO SIZE\n");
@@ -899,7 +900,7 @@ int main (int argc, char *argv[])  {
 	}
 	else  {
 	  ruleLocAmount = it;
-	  ruleLocs = malloc(sizeof(int) * ruleLocAmount);
+	  ruleLocs = malloc((sizeof(int) * ruleLocAmount) + 1);
 	  for (i = 0; i != ruleLocAmount + 1; i++)  { // Copy all locations to be run upon into ruleLocs
 	    *(ruleLocs + i) = i;
 	  }
@@ -963,7 +964,7 @@ int main (int argc, char *argv[])  {
 	}
 	else  {
 	  ruleLocAmount = it;
-	  ruleLocs = malloc(sizeof(int) * ruleLocAmount);
+	  ruleLocs = malloc((sizeof(int) * ruleLocAmount) + 1);
 	  for (i = 0; i != ruleLocAmount + 1; i++)  { // Copy all locations to be run upon into ruleLocs
 	    *(ruleLocs + i) = i;
 	  }
