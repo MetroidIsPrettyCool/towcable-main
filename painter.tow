@@ -1,0 +1,18 @@
+DIMN 2i.
+SIZE 50i 50i.
+REGI 0i. !X!
+REGI 1i. !Y!
+REGI 2i. !Character!
+RULE 0i RVAL 2i 1i 1i. !Sets a cell to what the user picks!
+RULE 1i 32i 0i 1i. !Sets a cell to ' '!
+BEGN.
+CALL 1i &.
+LOOP 0i 10i.
+INPT 0i.
+INPT 1i.
+INPT 2i.
+CALL 0i ATLO RVAL 0i RVAL 1i.
+CLRS.
+CRPT &.
+LOTO 0i.
+EXIT.
