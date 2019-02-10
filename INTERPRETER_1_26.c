@@ -219,6 +219,9 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	i5 = 0;
 	for (i4 = 0; i4 != dimensions; i4++)  { // this loop does all the calculations
 	  i2 = 1;
+	  while (*(valS + i4) >= *(cellSizes + i4))  { // Deals w/ overflows
+	    *(valS + i4) -= *(cellSizes + i4);
+	  }
 	  for (i3 = 0; i3 != i4; i3++)  { // figures out offset
 	    i2 *= *(cellSizes + i3);
 	  }
@@ -715,7 +718,7 @@ int main (int argc, char *argv[])  {
 	    }
 	    else {
 	      endwin();
-	      printf("ERR: ILLEGAL CHARACTER '%c' AT %i\n", *(inptStr + inStrPtr), inStrPtr);
+	      printf("ERR 05: ILLEGAL OR UNEXPECTED CHARACTER '%c' AT %i\n", *(inptStr + inStrPtr), inStrPtr);
 	      return -1;
 	    }
 	  }
@@ -1032,11 +1035,10 @@ int main (int argc, char *argv[])  {
 	  printf("ERR 15: I/O ACCESSING ILLEGAL LOCATION\n");
 	  return -1;
 	}
-	scanw("%d", (cell + *arguments));
+	scanw("%d%s", (cell + *arguments), NULL);
 	if (*(cell + *arguments) < 0)  {
 	  *(cell + *arguments) = 0;
 	}
-	while ((c = getch()) != '\n' && c != EOF);
       }
       else if (currCommand == 603)  { // CALL
 	if (argAmount == -1)  {
