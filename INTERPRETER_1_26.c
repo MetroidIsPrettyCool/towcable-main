@@ -117,7 +117,7 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
-	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 point to 2,2, not 4,0
+	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 points to 2,2, not 4,0
 	      i4 *= *(cellSizes + i5);
 	    }
 	    i3 += *(valS + (2 * i2 + 1)) * i4; // Update i3 with the most recent location of where we are pointing at
@@ -127,7 +127,7 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
-	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 point to 2,2, not 4,0
+	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 points to 2,2, not 4,0
 	      i4 *= *(cellSizes + i5);
 	    }
 	    i3 += (*(cellPointerCoors + i2) + *(valS + (2 * i2 + 1))) * i4; // Update i3 with the most recent location of where we are pointing at
@@ -137,7 +137,7 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
-	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 point to 2,2, not 4,0
+	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 points to 2,2, not 4,0
 	      i4 *= *(cellSizes + i5);
 	    }
 	    i3 += (*(cellPointerCoors + i2) - *(valS + (2 * i2 + 1))) * i4; // Update i3 with the most recent location of where we are pointing at
@@ -150,31 +150,31 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	i3 = 0;
 	for (i2 = 0; i2 != dimensions; i2++)  {
 	  if (*(valS + (2 * i2)) == 200) { // @
-	    while (*(valS + (2 * i2) + 1) > *(cellSizes + i2))  {
+	    while (*(valS + (2 * i2) + 1) > *(cellSizes + i2))  { // Check for overflow
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
-	    for (i5 = 0; i5 < i2; i5++)  {
+	    for (i5 = 0; i5 < i2; i5++)  { // Calculate offset
 	      i4 *= *(cellSizes + i5);
 	    }
 	    i3 += *(valS + (2 * i2 + 1)) * i4;
 	  }
 	  if (*(valS + (2 * i2)) == 201) { // +
-	    while (*(cellPointerCoors + i2) + *(valS + (2 * i2) + 1) >= *(cellSizes + i2))  {
+	    while (*(cellPointerCoors + i2) + *(valS + (2 * i2) + 1) >= *(cellSizes + i2))  { // Check for overflow
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
-	    for (i5 = 0; i5 < i2; i5++)  {
+	    for (i5 = 0; i5 < i2; i5++)  { // Calculate offset
 	      i4 *= *(cellSizes + i5);
 	    }
 	    i3 += (*(cellPointerCoors + i2) + *(valS + (2 * i2 + 1))) * i4;
 	  }
 	  if (*(valS + (2 * i2)) == 202) { // -
-	    while (*(cellPointerCoors + i2) - *(valS + (2 * i2) + 1) < 0)  {
+	    while (*(cellPointerCoors + i2) - *(valS + (2 * i2) + 1) < 0)  { // Check for overflow
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
-	    for (i5 = 0; i5 < i2; i5++)  {
+	    for (i5 = 0; i5 < i2; i5++)  { // Calculate offset
 	      i4 *= *(cellSizes + i5);
 	    }
 	    i3 += (*(cellPointerCoors + i2) - *(valS + (2 * i2 + 1))) * i4;
@@ -187,7 +187,7 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
-	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 point to 2,2, not 4,0
+	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 points to 2,2, not 4,0
 	      i4 *= *(cellSizes + i5);
 	    }
 	    i3 += *(valS + (2 * i2 + 1)) * i4; // Update i3 with the most recent location of where we are pointing at
@@ -197,7 +197,7 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
-	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 point to 2,2, not 4,0
+	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 points to 2,2, not 4,0
 	      i4 *= *(cellSizes + i5);
 	    }
 	    i3 += (*(cellPointerCoors + i2) + *(valS + (2 * i2 + 1))) * i4; // Update i3 with the most recent location of where we are pointing at
@@ -207,7 +207,7 @@ int AEND (int *tokens, int tokenAmount, int *cell, int *cellSizes, int dimension
 	      *(valS + (2 * i2) + 1) -= *(cellSizes + i2);
 	    }
 	    i4 = 1;
-	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 point to 2,2, not 4,0
+	    for (i5 = 0; i5 < i2; i5++)  { // This is used to get the right offset for values hwen dealing with multiple dimensions, so that 2,2 points to 2,2, not 4,0
 	      i4 *= *(cellSizes + i5);
 	    }
 	    i3 += (*(cellPointerCoors + i2) - *(valS + (2 * i2 + 1))) * i4; // Update i3 with the most recent location of where we are pointing at
@@ -291,6 +291,7 @@ int main (int argc, char *argv[])  {
   initscr(); // Enter curses
 
   scrollok(stdscr, true);
+  idlok(stdscr, false);
   
   char filename [100];
 
@@ -580,6 +581,7 @@ int main (int argc, char *argv[])  {
 	  }
 	}
 	continue;
+	refresh();
       }
       else if (*(inptStr) == 'E' && *(inptStr + 1) == 'X' && *(inptStr + 2) == 'I' && *(inptStr + 3) == 'T')  {
 	currCommand = 610;
@@ -601,7 +603,6 @@ int main (int argc, char *argv[])  {
 	return -1;
       }
     }
-    refresh();
     for (argAmount = 0; argStop != 1; argAmount++)  { // Reads the arguments into the argument array
       input = 10;
       tracker = 0;
