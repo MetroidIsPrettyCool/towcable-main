@@ -1,0 +1,46 @@
+DIMN 2i.
+SIZE 76i 76i.
+REGI 0i. !Facing!
+REGI 1i. !X!
+REGI 2i. !Y!
+RULE 0i 0i 1i LOCN +0i +0i. !Flips squares!
+RULE 1i 32i 42i EQ LOCN +0i +0i 0i. !Turns the board into graphics mode!
+RULE 2i 0i 1i EQ LOCN +0i +0i 32i. !Takes the board out of graphics mode!
+BEGN.
+SETR 1i 37i.
+SETR 2i 37i.
+LOOP 0i 11000i.
+!Update facing direction!
+COND EQ LOCN @RVAL 1i @RVAL 2i 0i.
+SETR 0i ADDN RVAL 0i 1i.
+COND EQ RVAL 0i 4i.
+SETR 0i 0i.
+ENDC.
+ENDC.
+COND LOCN @RVAL 1i @RVAL 2i.
+COND EQ RVAL 0i 0i.
+SETR 0i 4i.
+ENDC.
+SETR 0i SUBN RVAL 0i 1i.
+ENDC.
+!Flip!
+CALL 0i ATLO RVAL 1i RVAL 2i.
+!Move!
+COND EQ RVAL 0i 0i.
+SETR 1i SUBN RVAL 1i 1i.
+ENDC.
+COND EQ RVAL 0i 1i.
+SETR 2i SUBN RVAL 2i 1i.
+ENDC.
+COND EQ RVAL 0i 2i.
+SETR 1i ADDN RVAL 1i 1i.
+ENDC.
+COND EQ RVAL 0i 3i.
+SETR 2i ADDN RVAL 2i 1i.
+ENDC.
+STRO "______________________________________________________________________________________________\n".
+CALL 1i &.
+CRPT &.
+CALL 2i &.
+LOTO 0i.
+EXIT.

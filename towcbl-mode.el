@@ -6,7 +6,7 @@
 	("[0-9]+i" . font-lock-constant-face)
 	("@\\|\+\\|\-\\|&" . font-lock-warning-face)
 	("\\(\\(ADD\\|SUB\\|MUL\\|DIV\\|MOD\\|LOC\\)N\\)\\|RAND\\|PAST\\|ATLO\\|RVAL" . font-lock-function-name-face)
-	("DIMN\\|SIZE\\|SETP\\|RULE\\|CMPX\\|BEGN\\|OUPT\\|CRPT\\|INPT\\|CALL\\|CALX\\|LOOP\\|LOTO\\|COND\\|ENDC\\|STRO\\|EXIT\\|REGI\\|SETR" . font-lock-builtin-face)
+	("DIMN\\|SIZE\\|SETP\\|RULE\\|CMPX\\|BEGN\\|OUPT\\|CRPT\\|INPT\\|CALL\\|CALX\\|LOOP\\|LOTO\\|COND\\|ENDC\\|STRO\\|EXIT\\|REGI\\|SETR\\|CLRS" . font-lock-builtin-face)
 	("\\(E\\|N\\)Q\\|\\(G\\|L\\)\\(T\\|E\\)" . font-lock-keyword-face)))
 
 (defvar towcbl-mode-syntax-table nil "Syntax table for `towcbl-mode'.")
