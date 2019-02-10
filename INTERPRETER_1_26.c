@@ -1257,6 +1257,9 @@ int main (int argc, char *argv[])  {
 	  printf("ERR 03: INVALID PARAMETER AMOUNT\n");
 	  return -1;
 	}
+	printw("Press any key to continue...");
+	refresh();
+	getch();
 	endwin();
 	return 0;
       }
