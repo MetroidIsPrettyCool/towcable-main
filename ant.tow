@@ -1,5 +1,5 @@
 DIMN 2i.
-SIZE 76i 76i.
+SIZE 80i 80i.
 REGI 0i. !Facing!
 REGI 1i. !X!
 REGI 2i. !Y!
@@ -8,7 +8,7 @@ RULE 1i 32i 42i EQ LOCN +0i +0i 0i. !Turns the board into graphics mode!
 RULE 2i 0i 1i EQ LOCN +0i +0i 32i. !Takes the board out of graphics mode!
 BEGN.
 SETR 1i 37i.
-SETR 2i 37i.
+SETR 2i 50i.
 LOOP 0i 11000i.
 !Update facing direction!
 COND EQ LOCN @RVAL 1i @RVAL 2i 0i.
@@ -24,7 +24,7 @@ ENDC.
 SETR 0i SUBN RVAL 0i 1i.
 ENDC.
 !Flip!
-CALL 0i ATLO RVAL 1i RVAL 2i.
+CALL 0i ATLO @RVAL 1i @RVAL 2i.
 !Move!
 COND EQ RVAL 0i 0i.
 SETR 1i SUBN RVAL 1i 1i.

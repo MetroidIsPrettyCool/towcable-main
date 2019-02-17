@@ -11,19 +11,18 @@ CMPX 0i LOCN +0i +0i ( !Don't change if no rule applies!
      1i EQ LOCN +0i +0i 0i EQ ADDN ADDN ADDN LOCN +1i +0i LOCN +1i +1i ADDN LOCN +0i +1i LOCN -1i +1i ADDN ADDN LOCN -1i +0i LOCN -1i -1i ADDN LOCN +0i -1i LOCN +1i -1i 3i. !Rule 4!
 )
 BEGN.
-CALL 0i  (
-     ATLO (23i 1i) ATLO (24i 1i) ATLO (21i 2i) ATLO (25i 2i) ATLO (12i 3i) ATLO (20i 3i) ATLO (26i 3i) ATLO (12i 4i) ATLO (14i 4i) ATLO (19i 4i) ATLO (20i 4i) ATLO (22i 4i)  !Sets up the board!
-     ATLO (26i 4i) ATLO (35i 4i) ATLO (36i 4i) ATLO (15i 5i) ATLO (16i 5i) ATLO (20i 5i) ATLO (26i 5i) ATLO (35i 5i) ATLO (36i 5i) ATLO ( 1i 6i) ATLO ( 2i 6i) ATLO (15i 6i)  !Sets up the board!
-     ATLO (16i 6i) ATLO (21i 6i) ATLO (25i 6i) ATLO ( 1i 7i) ATLO ( 2i 7i) ATLO (15i 7i) ATLO (16i 7i) ATLO (23i 7i) ATLO (24i 7i) ATLO (12i 8i) ATLO (14i 8i) ATLO (12i 9i). !Sets up the board!
+CALL 0i ( !Sets up the board!
+     ATLO (@23i @1i) ATLO (@24i @1i) ATLO (@21i @2i) ATLO (@25i @2i) ATLO (@12i @3i) ATLO (@20i @3i) ATLO (@26i @3i) ATLO (@12i @4i) ATLO (@14i @4i) ATLO (@19i @4i) ATLO (@20i @4i) ATLO (@22i @4i)
+     ATLO (@26i @4i) ATLO (@35i @4i) ATLO (@36i @4i) ATLO (@15i @5i) ATLO (@16i @5i) ATLO (@20i @5i) ATLO (@26i @5i) ATLO (@35i @5i) ATLO (@36i @5i) ATLO (@ 1i @6i) ATLO (@ 2i @6i) ATLO (@15i @6i)
+     ATLO (@16i @6i) ATLO (@21i @6i) ATLO (@25i @6i) ATLO (@ 1i @7i) ATLO (@ 2i @7i) ATLO (@15i @7i) ATLO (@16i @7i) ATLO (@23i @7i) ATLO (@24i @7i) ATLO (@12i @8i) ATLO (@14i @8i) ATLO (@12i @9i).
 )
 CALL 1i &.
 CRPT &.
 CALL 2i &.
-STRO "--------------------------------------------------------------------------------\n".
 LOOP 0i &.
 CALX 0i &.
 CALL 1i &.
+CLRS.
 CRPT &.
 CALL 2i &.
-STRO "--------------------------------------------------------------------------------\n".
 LOTO 0i.
