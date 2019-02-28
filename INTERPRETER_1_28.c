@@ -1037,7 +1037,7 @@ int main (int argc, char *argv[])  {
 	strcpy(inptStr, *(ruleStore + *arguments)); // Copy the rule into input
 	if (*(arguments + 1) != -1)  {
 	  ruleLocAmount = argAmount - 1;
-	  ruleLocs = malloc(sizeof(int) * ruleLocAmount);
+	  ruleLocs = malloc(sizeof(int) * (ruleLocAmount + 1));
 	  for (i = 0; i != ruleLocAmount + 1; i++)  { // Copy all locations to be run upon into ruleLocs
 	    if (*(arguments + i + 1) >= it)  {
 	      endwin();
@@ -1049,7 +1049,7 @@ int main (int argc, char *argv[])  {
 	}
 	else  {
 	  ruleLocAmount = it;
-	  ruleLocs = malloc(sizeof(int) * ruleLocAmount);
+	  ruleLocs = malloc(sizeof(int) * (ruleLocAmount + 1));
 	  for (i = 0; i != ruleLocAmount + 1; i++)  { // Copy all locations to be run upon into ruleLocs
 	    *(ruleLocs + i) = i;
 	  }
@@ -1106,7 +1106,7 @@ int main (int argc, char *argv[])  {
 	strcpy(inptStr, *(cmpxStore + *arguments)); // Copy the rule into input
 	if (*(arguments + 1) != -1)  {
 	  ruleLocAmount = argAmount - 1;
-	  ruleLocs = malloc(sizeof(int) * ruleLocAmount);
+	  ruleLocs = malloc(sizeof(int) * (ruleLocAmount + 1));
 	  for (i = 0; i != ruleLocAmount + 1; i++)  { // Copy all locations to be run upon into ruleLocs
 	    if (*(arguments + i + 1) >= it)  {
 	      endwin();
@@ -1118,7 +1118,7 @@ int main (int argc, char *argv[])  {
 	}
 	else  {
 	  ruleLocAmount = it;
-	  ruleLocs = malloc(sizeof(int) * ruleLocAmount);
+	  ruleLocs = malloc(sizeof(int) * (ruleLocAmount + 1));
 	  for (i = 0; i != ruleLocAmount + 1; i++)  { // Copy all locations to be run upon into ruleLocs
 	    *(ruleLocs + i) = i;
 	  }
