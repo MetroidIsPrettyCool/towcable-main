@@ -1,0 +1,44 @@
+DIMN 2i.
+SIZE 50i 50i.
+RULE 0i 1i 1i 1i. !Used to set up the initial board!
+
+RULE 1i 3i 3i 1i. !Used to place an electron head!
+RULE 2i 2i 2i 1i. !Used to place an electron tail!
+
+CMPX 0i LOCN +0i +0i !Don't change if no rule applies!
+     2i EQ LOCN +0i +0i 3i, !Rule 1!  !0 is empty, 1 is conductor, 2 is electron tail, 3 is electron head!
+     1i EQ LOCN +0i +0i 2i, !Rule 2!
+     3i EQ LOCN +0i +0i 1i EQ ADDN ADDN ADDN ADDN ADDN ADDN ADDN EQ LOCN +0i +1i 3i EQ LOCN +0i -1i 3i EQ LOCN +1i +0i 3i EQ LOCN -1i +0i 3i EQ LOCN +1i +1i 3i EQ LOCN -1i +1i 3i EQ LOCN +1i -1i 3i EQ LOCN -1i -1i 3i 1i, !R 3!
+     3i EQ LOCN +0i +0i 1i EQ ADDN ADDN ADDN ADDN ADDN ADDN ADDN EQ LOCN +0i +1i 3i EQ LOCN +0i -1i 3i EQ LOCN +1i +0i 3i EQ LOCN -1i +0i 3i EQ LOCN +1i +1i 3i EQ LOCN -1i +1i 3i EQ LOCN +1i -1i 3i EQ LOCN -1i -1i 3i 2i. !R 3!
+
+CMPX 1i 32i !Default is space!
+     35i EQ LOCN +0i +0i 1i,
+     42i EQ LOCN +0i +0i 2i,
+     79i EQ LOCN +0i +0i 3i.
+
+CMPX 2i 0i !Default is empty!
+     1i EQ LOCN +0i +0i 35i,
+     2i EQ LOCN +0i +0i 42i,
+     3i EQ LOCN +0i +0i 79i.
+
+BEGN.
+CALL 0i !Sets up the board!
+     ATLO @1i @2i ATLO @1i @3i ATLO @1i @4i ATLO @1i @6i ATLO @1i @7i ATLO @1i @8i ATLO @0i @4i ATLO @0i @5i ATLO @2i @4i ATLO @2i @5i
+     ATLO @5i @2i ATLO @5i @3i ATLO @5i @5i ATLO @5i @6i ATLO @5i @7i ATLO @5i @8i ATLO @4i @4i ATLO @4i @5i ATLO @6i @4i ATLO @6i @5i.
+     
+CALL 1i ATLO @1i @1i ATLO @5i @1i.
+
+CALL 2i ATLO @1i @0i ATLO @5i @0i.
+
+CALX 1i &.
+CRPT &.
+CALX 2i &.
+STOP.
+LOOP 0i &.
+CALX 0i &.
+CALX 1i &.
+CLRS.
+CRPT &.
+CALX 2i &.
+STOP.
+LOTO 0i.
