@@ -1,0 +1,32 @@
+DIMN 2i.
+SIZE 50i 50i.
+RULE 0i 2i 1i 1i. !Used to set up the initial board!
+
+CMPX 1i 32i
+     35i EQ LOCN +0i +0i 2i,
+     42i EQ LOCN +0i +0i 1i.
+
+CMPX 2i 0i
+     2i EQ LOCN +0i +0i 35i,
+     1i EQ LOCN +0i +0i 42i.
+
+
+CMPX 0i LOCN +0i +0i ( !Don't change if no rule applies!
+     1i EQ LOCN +0i +0i 2i, !If the cell is alive, make it become dying!
+     0i EQ LOCN +0i +0i 1i, !Kill dying cells!
+     2i EQ ADDN ADDN ADDN ADDN ADDN ADDN ADDN EQ LOCN -1i -1i 2i EQ LOCN +0i -1i 2i EQ LOCN +1i -1i 2i EQ LOCN -1i +0i 2i EQ LOCN +1i +0i 2i EQ LOCN -1i +1i 2i EQ LOCN +0i +1i 2i EQ LOCN +1i +1i 2i 2i.
+)
+BEGN.
+CALL 0i ( !Sets up the board!
+     ATLO @25i @25i ATLO @24i @25i ATLO @25i @24i ATLO @24i @24i ATLO @23i @25i.
+)
+CALX 1i &.
+CRPT &.
+CALX 2i &.
+LOOP 0i &.
+CALX 0i &.
+CALX 1i &.
+CLRS.
+CRPT &.
+CALX 2i &.
+LOTO 0i.
