@@ -1,0 +1,27 @@
+DIMN 1i.
+SIZE 100i.
+RULE 0i 1i 1i 1i.
+CMPX 666i 35i 32i EQ LOCN +0i 0i, 42i EQ LOCN +0i 1i. !Into graphics mode!
+CMPX 616i 2i 0i EQ LOCN +0i 32i, 1i EQ LOCN +0i 42i.  !Out of graphics mode!
+CMPX 0i 0i ( !Main rule!
+0i EQ ADDN ADDN LOCN -1i LOCN +0i LOCN +1i 0i,
+1i EQ ADDN ADDN LOCN -1i LOCN +0i LOCN +1i 1i,
+0i EQ ADDN ADDN LOCN -1i LOCN +0i LOCN +1i 2i,
+1i EQ ADDN ADDN LOCN -1i LOCN +0i LOCN +1i 3i,
+1i EQ ADDN ADDN LOCN -1i LOCN +0i LOCN +1i 4i,
+1i EQ ADDN ADDN LOCN -1i LOCN +0i LOCN +1i 5i,
+1i EQ ADDN ADDN LOCN -1i LOCN +0i LOCN +1i 6i.
+)
+BEGN.
+CALL 0i 49i.
+CALX 666i &.    !Into graphics mode!
+CRPT &.         !Output!
+CALX 616i &.    !Out of graphics mode!
+LOOP 0i 40i.    !Loops 40 times!
+CALX 0i &.      !Run the main rule!
+CALX 666i &.    !Into graphics mode!
+CRPT &.         !Output!
+CALX 616i &.    !Out of graphics mode!
+LOTO 0i.
+STOP.
+EXIT.

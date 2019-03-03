@@ -1,23 +1,20 @@
-!Wolfram rule 60 implementation in towcbl!
-!Uses " " for 0, and "*" for 1!
-!Enjoy!
 DIMN 1i.
-SIZE 100i.
+SIZE 130i.
 RULE 0i 32i 35i EQ LOCN +0i 0i. !Used to set a cell to 32 if a cell is 0, if it's 32, set it to 35!
-CMPX 60i 0i !Full rule 60 implementaion!
+CMPX 60i 0i !Full rule 30 implementaion!
 32i EQ LOCN -1i 35i EQ LOCN +0i 35i EQ LOCN +1i 35i,  !111 0!
 32i EQ LOCN -1i 35i EQ LOCN +0i 35i EQ LOCN +1i 32i,  !110 0!
-35i EQ LOCN -1i 35i EQ LOCN +0i 32i EQ LOCN +1i 35i,  !101 1!
+32i EQ LOCN -1i 35i EQ LOCN +0i 32i EQ LOCN +1i 35i,  !101 0!
 35i EQ LOCN -1i 35i EQ LOCN +0i 32i EQ LOCN +1i 32i,  !100 1!
 35i EQ LOCN -1i 32i EQ LOCN +0i 35i EQ LOCN +1i 35i,  !011 1!
 35i EQ LOCN -1i 32i EQ LOCN +0i 35i EQ LOCN +1i 32i,  !010 1!
-32i EQ LOCN -1i 32i EQ LOCN +0i 32i EQ LOCN +1i 35i,  !001 0!
+35i EQ LOCN -1i 32i EQ LOCN +0i 32i EQ LOCN +1i 35i,  !001 1!
 32i EQ LOCN -1i 32i EQ LOCN +0i 32i EQ LOCN +1i 32i.  !000 0!
 BEGN.
-STRO "Rule 60 implementation in TOWCBL by Joseph Burke 12/26/2018\n".
+STRO "Rule 30 implementation in TOWCBL by Joseph Burke 12/28/2018\n".
 CALL 0i &.
-CALL 0i 0i.
-LOOP 0i 100i.
+CALL 0i 50i.
+LOOP 0i 50i.
 CRPT &.
 CALX 60i &.
 LOTO 0i.

@@ -1,0 +1,23 @@
+DIMN 1i.
+SIZE 100i.
+RULE 0i 32i 42i EQ LOCN +0i 0i. !Used to set a cell to 32 if a cell is 0, if it's 32, set it to 42!
+CMPX 60i 0i !Full rule 184 implementaion!
+42i EQ LOCN -1i 42i EQ LOCN +0i 42i EQ LOCN +1i 42i,  !111 1!
+32i EQ LOCN -1i 42i EQ LOCN +0i 42i EQ LOCN +1i 32i,  !110 0!
+42i EQ LOCN -1i 42i EQ LOCN +0i 32i EQ LOCN +1i 42i,  !101 1!
+42i EQ LOCN -1i 42i EQ LOCN +0i 32i EQ LOCN +1i 32i,  !100 1!
+42i EQ LOCN -1i 32i EQ LOCN +0i 42i EQ LOCN +1i 42i,  !011 1!
+32i EQ LOCN -1i 32i EQ LOCN +0i 42i EQ LOCN +1i 32i,  !010 0!
+32i EQ LOCN -1i 32i EQ LOCN +0i 32i EQ LOCN +1i 42i,  !001 0!
+32i EQ LOCN -1i 32i EQ LOCN +0i 32i EQ LOCN +1i 32i.  !000 0!
+BEGN.
+STRO "Rule 184 implementation in TOWCBL by Joseph Burke 2/27/2019\n".
+CALL 0i &.
+CALL 0i 50i 51i 60i 61i 62i 70i.
+LOOP 0i 20i.
+CRPT &.
+STRO "---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n".
+CALX 60i &.
+LOTO 0i.
+STOP.
+EXIT.
