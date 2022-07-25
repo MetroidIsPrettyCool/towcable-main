@@ -1,3 +1,24 @@
+# Hey!
+I'd like to apologize for the contents of this repository, and I'll hope you don't judge me too harshly for them.
+
+These are the workings of an unmedicated, self-taught, impulsive, 13-year-old me.
+
+This was an attempt to develop a programming language around the concept of cellular automata (something I'm still interested in doing right)
+
+This was also the first time I had even attempted to do such a thing.
+
+In fact, this wasn't just my first real interpreter (bf and deadfish don't count), it was my first time using git, and my first time doing memory management in C.
+
+I'd bitten off the entire back half of an elephant, and all I could chew was the pinkie toes.
+
+The internal workings of this software are inane, the syntax of the language is worse, and there's a memory leak *somewhere* in the spaghetti that I cannot be bothered to find.
+
+I'm leaving this (and the rest of the OG readme/personal language reference) for posterity, and as a monument to my sins.
+
+Here be dragons.
+
+---
+
 TOWCBL Syntax (right now this is mostly for me, and if it's not readable to others, let me know.)
 
 READ_ME_TODO: add descriptions to commands
